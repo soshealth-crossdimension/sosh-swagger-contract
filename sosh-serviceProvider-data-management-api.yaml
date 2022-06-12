@@ -72,7 +72,7 @@ paths:
       responses:
         '200':
           description: |
-            *OK* - Inserted Doctor Will be returned Successfully
+            *OK* - Inserted Service Provider Will be returned Successfully
           schema:
             $ref: '#/definitions/ServiceProvider'
         '400':
@@ -514,12 +514,12 @@ paths:
 definitions:
   ServiceProvider:
     type: object
-    required:
+    required: 
       - id
       - aadharId
       - departmentId
       - qualification
-      - designation
+      - serviceType
     properties:
       id:
         type: string
