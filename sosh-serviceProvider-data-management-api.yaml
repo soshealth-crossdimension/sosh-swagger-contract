@@ -511,6 +511,259 @@ paths:
             *Error* - Internal Server error
           schema:
             $ref: '#/definitions/Error'
+
+  /customer:
+    get:
+      operationId: getCustomer
+      tags:
+        - Customer Management
+      summary: List of Customers available
+      description: Produces List of Customers available
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: query
+          name: filters
+          type: array
+          description: |
+            - supported qualifiers [==, >=, !=, <=, =@]
+            - ";" will act as filter separator
+            - "," will act as value separator in a particular filter
+          items:
+            type: string
+      responses:
+        '200':
+          description: |
+            *OK* - List of OPDs Will be returned Successfully
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Customer'
+        '400':
+          description: |
+            *Error* - Bad Request
+          schema:
+            $ref: '#/definitions/Error'
+        '404':
+          description: |
+            *Error* - Not Found
+          schema:
+            $ref: '#/definitions/Error'
+        '500':
+          description: |
+            *Error* - Internal Server error
+          schema:
+            $ref: '#/definitions/Error'
+    post:
+      operationId: saveCustomer
+      tags:
+        - Customer Management
+      summary: Insertion of Customer
+      description: Creates New entry of a Customer
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: Customer Input
+          required: true
+          schema:
+            $ref: '#/definitions/Customer'
+      responses:
+        '200':
+          description: |
+            *OK* - Inserted Customer Will be returned Successfully
+          schema:
+            $ref: '#/definitions/Customer'
+        '400':
+          description: |
+            *Error* - Bad Request
+          schema:
+            $ref: '#/definitions/Error'
+        '404':
+          description: |
+            *Error* - Not Found
+          schema:
+            $ref: '#/definitions/Error'
+        '500':
+          description: |
+            *Error* - Internal Server error
+          schema:
+            $ref: '#/definitions/Error'
+    patch:
+      operationId: updateCustomer
+      tags:
+        - Customer Management
+      summary: Customer Updation by filter
+      description: Produces List of Customers
+      parameters:
+        - in: query
+          name: filters
+          type: array
+          description: |
+            - supported qualifiers [==, >=, !=, <=, =@]
+            - ";" will act as filter separator
+            - "," will act as value separator in a particular filter
+          items:
+            type: string
+        - in: body
+          name: Patch Element
+          required: true
+          schema:
+            $ref: '#/definitions/PatchElement'
+          description: |
+            "Customer patch element"
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: |
+            *OK* - Specific Customer Will be returned Successfully
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Customer'
+        '404':
+          description: |
+            *Error* - Not Found
+          schema:
+            $ref: '#/definitions/Error'
+        '419':
+          description: |
+            *Error* - Conflict
+          schema:
+            $ref: '#/definitions/Error'
+        '500':
+          description: |
+            *Error* - Internal Server error
+          schema:
+            $ref: '#/definitions/Error'
+    delete:
+      operationId: deleteCustomer
+      tags:
+        - Customer Management
+      summary: Customer Deletion by filter
+      description: delete Customer
+      parameters:
+        - in: query
+          name: filters
+          type: array
+          description: |
+            - supported qualifiers [==, >=, !=, <=, =@]
+            - ";" will act as filter separator
+            - "," will act as value separator in a particular filter
+          items:
+            type: string
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: |
+            *OK* - Specific Customer Will be returned Successfully
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Customer'
+        '404':
+          description: |
+            *Error* - Not Found
+          schema:
+            $ref: '#/definitions/Error'
+        '419':
+          description: |
+            *Error* - Conflict
+          schema:
+            $ref: '#/definitions/Error'
+        '500':
+          description: |
+            *Error* - Internal Server error
+          schema:
+            $ref: '#/definitions/Error'
+  /customer/{customerId}:
+    get:
+      operationId: getCustomerById
+      tags:
+        - Customer Management
+      summary: Customer By Id
+      description: Produces Customer for the Id
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: customerId
+          required: true
+          type: string
+          description: |
+            Customer By Id
+      responses:
+        '200':
+          description: |
+            *OK* - List of Customers Will be returned Successfully
+          schema:
+            $ref: '#/definitions/Customer'
+        '400':
+          description: |
+            *Error* - Bad Request
+          schema:
+            $ref: '#/definitions/Error'
+        '404':
+          description: |
+            *Error* - Not Found
+          schema:
+            $ref: '#/definitions/Error'
+        '500':
+          description: |
+            *Error* - Internal Server error
+          schema:
+            $ref: '#/definitions/Error'
+    delete:
+      operationId: deleteCustomerById
+      tags:
+        - Customer Management
+      summary: Customer Deletion by Id
+      description: delete Customer by id
+      parameters:
+        - in: path
+          name: customerId
+          required: true
+          type: string
+          description: |
+            delete customer by id
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: |
+            *OK* - Specific Customer Will be returned Successfully
+          schema:
+            $ref: '#/definitions/Customer'
+        '404':
+          description: |
+            *Error* - Not Found
+          schema:
+            $ref: '#/definitions/Error'
+        '419':
+          description: |
+            *Error* - Conflict
+          schema:
+            $ref: '#/definitions/Error'
+        '500':
+          description: |
+            *Error* - Internal Server error
+          schema:
+            $ref: '#/definitions/Error'
+
 definitions:
   ServiceProvider:
     type: object
@@ -606,25 +859,9 @@ definitions:
         $ref: '#/definitions/DepartmentType'
       contact:
         $ref: '#/definitions/ContactMedium'
-  ContactMedium:
-    type: object
-    properties:
-      email:
-        type: string
-        description: |
-          Email id of Particular Customer
-      mobile:
-        type: string
-        description: |
-          mobile of Particular Customer
-      fax:
-        type: string
-        description: |
-          fax of Particular Customer
-      alternate_number:
-        type: string
-        description: |
-          mobile of Particular Customer
+      address:
+        $ref: '#/definitions/AddressRef'
+  
   Department:
     type: object
     required:
@@ -663,6 +900,48 @@ definitions:
         description: >
           date of Freezing functioning day of a department to get clear analysis
           of that department
+
+  Customer:
+    type: object
+    required: 
+      - id
+      - aadharId
+    properties:
+      id:
+        type: string
+        description: |
+          Id of Particular Customer 
+      aadharId:
+        type: string
+        description: |
+          Aadhar Id of Particular Customer 
+      firstName:
+        type: string
+        description: |
+          first name of a Customer
+      middleName:
+        type: string
+        description: |
+          Middle name of a Customer
+      lastName:
+        type: string
+        description: |
+          last name of a Customer
+      fullName:
+        type: string
+        description: |
+          full name of Customer
+      createdDate:
+        type: string
+        description: |
+          date of account creation in SOSHealth
+      gender:
+        $ref: '#/definitions/GenderRef'
+      contact:
+        $ref: '#/definitions/ContactMedium'
+      address:
+        $ref: '#/definitions/AddressRef'
+
   Organization:
     type: object
     required:
@@ -681,7 +960,7 @@ definitions:
       contactMedium:
         $ref: '#/definitions/ContactMedium'
       address:
-        $ref: '#/definitions/AdressRef'
+        $ref: '#/definitions/AddressRef'
       state:
         type: string
         description: |
@@ -692,7 +971,28 @@ definitions:
           Country where its situated
       organizationType:
         $ref: '#/definitions/OrganizationType'
-  AdressRef:
+
+  ContactMedium:
+    type: object
+    properties:
+      email:
+        type: string
+        description: |
+          Email id of Particular Customer
+      mobile:
+        type: string
+        description: |
+          mobile of Particular Customer
+      fax:
+        type: string
+        description: |
+          fax of Particular Customer
+      alternate_number:
+        type: string
+        description: |
+          mobile of Particular Customer
+
+  AddressRef:
     type: object
     properties:
       street1:
@@ -715,6 +1015,7 @@ definitions:
         type: string
         description: |
           Zipcode for the organization
+
   OrganizationType:
     type: string
     enum:
@@ -727,6 +1028,7 @@ definitions:
       - DIAG_SA
       - DIAG_CH
       - OTHERS
+
   PatchElement:
     type: array
     items:
@@ -742,6 +1044,7 @@ definitions:
           type: string
           description: |
             Object Path to be Patched
+
   Error:
     type: object
     properties:
@@ -761,12 +1064,14 @@ definitions:
         type: string
         description: |
           Error Path
+
   DepartmentType:
     type: string
     enum:
       - OPD
       - IPD
       - BOTH
+
   GenderRef:
     type: string
     enum:
@@ -774,6 +1079,7 @@ definitions:
       - Female
       - Transgender
       - Undisclosed
+
   SalutationRef:
     type: string
     enum:
@@ -781,6 +1087,7 @@ definitions:
       - Mr.
       - Mrs.
       - Ms.
+
   RegistraionStatus:
     type: string
     enum:
@@ -788,12 +1095,14 @@ definitions:
       - Approved
       - Rejected
       - Pending
+
   ServiceStatus:
     type: string
     enum:
       - Online
       - Offline
       - Engaged
+
   ServiceType:
     type: string
     enum:
@@ -801,3 +1110,4 @@ definitions:
       - Nurse
       - Medical Technologiest
       - Medical Attendant
+
