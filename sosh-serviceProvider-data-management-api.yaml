@@ -260,6 +260,260 @@ paths:
             *Error* - Internal Server error
           schema:
             $ref: '#/definitions/Error'
+
+  /organization:
+    get:
+      operationId: getOrganization
+      tags:
+        - Organization Management
+      summary: List of Organizations available
+      description: Produces List of Organizations available
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: query
+          name: filters
+          type: array
+          description: |
+            - supported qualifiers [==, >=, !=, <=, =@]
+            - ";" will act as filter separator
+            - "," will act as value separator in a particular filter
+          items:
+            type: string
+      responses:
+        '200':
+          description: |
+            *OK* - List of OPDs Will be returned Successfully
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Organization'
+        '400':
+          description: |
+            *Error* - Bad Request
+          schema:
+            $ref: '#/definitions/Error'
+        '404':
+          description: |
+            *Error* - Not Found
+          schema:
+            $ref: '#/definitions/Error'
+        '500':
+          description: |
+            *Error* - Internal Server error
+          schema:
+            $ref: '#/definitions/Error'
+    post:
+      operationId: saveOrganization
+      tags:
+        - Organization Management
+      summary: Insertion of Organization
+      description: Creates New entry of a Organization
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: Organization Input
+          required: true
+          schema:
+            $ref: '#/definitions/Organization'
+      responses:
+        '200':
+          description: |
+            *OK* - Inserted Organization Will be returned Successfully
+          schema:
+            $ref: '#/definitions/Organization'
+        '400':
+          description: |
+            *Error* - Bad Request
+          schema:
+            $ref: '#/definitions/Error'
+        '404':
+          description: |
+            *Error* - Not Found
+          schema:
+            $ref: '#/definitions/Error'
+        '500':
+          description: |
+            *Error* - Internal Server error
+          schema:
+            $ref: '#/definitions/Error'
+    patch:
+      operationId: updateOrganization
+      tags:
+        - Organization Management
+      summary: Organization Updation by filter
+      description: Produces List of Organizations
+      parameters:
+        - in: query
+          name: filters
+          type: array
+          description: |
+            - supported qualifiers [==, >=, !=, <=, =@]
+            - ";" will act as filter separator
+            - "," will act as value separator in a particular filter
+          items:
+            type: string
+        - in: body
+          name: Patch Element
+          required: true
+          schema:
+            $ref: '#/definitions/PatchElement'
+          description: |
+            "Organization patch element"
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: |
+            *OK* - Specific Organization Will be returned Successfully
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Organization'
+        '404':
+          description: |
+            *Error* - Not Found
+          schema:
+            $ref: '#/definitions/Error'
+        '419':
+          description: |
+            *Error* - Conflict
+          schema:
+            $ref: '#/definitions/Error'
+        '500':
+          description: |
+            *Error* - Internal Server error
+          schema:
+            $ref: '#/definitions/Error'
+    delete:
+      operationId: deleteOrganization
+      tags:
+        - Organization Management
+      summary: Organization Deletion by filter
+      description: delete Organization
+      parameters:
+        - in: query
+          name: filters
+          type: array
+          description: |
+            - supported qualifiers [==, >=, !=, <=, =@]
+            - ";" will act as filter separator
+            - "," will act as value separator in a particular filter
+          items:
+            type: string
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: |
+            *OK* - Specific Organization Will be returned Successfully
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Organization'
+        '404':
+          description: |
+            *Error* - Not Found
+          schema:
+            $ref: '#/definitions/Error'
+        '419':
+          description: |
+            *Error* - Conflict
+          schema:
+            $ref: '#/definitions/Error'
+        '500':
+          description: |
+            *Error* - Internal Server error
+          schema:
+            $ref: '#/definitions/Error'
+  /organization/{organizationId}:
+    get:
+      operationId: getOrganizationById
+      tags:
+        - Organization Management
+      summary: Organization By Id
+      description: Produces Organization for the Id
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: organizationId
+          required: true
+          type: string
+          description: |
+            Organization By Id
+      responses:
+        '200':
+          description: |
+            *OK* - List of Organizations Will be returned Successfully
+          schema:
+            $ref: '#/definitions/Organization'
+        '400':
+          description: |
+            *Error* - Bad Request
+          schema:
+            $ref: '#/definitions/Error'
+        '404':
+          description: |
+            *Error* - Not Found
+          schema:
+            $ref: '#/definitions/Error'
+        '500':
+          description: |
+            *Error* - Internal Server error
+          schema:
+            $ref: '#/definitions/Error'
+    delete:
+      operationId: deleteOrganizationById
+      tags:
+        - Organization Management
+      summary: Organization Deletion by Id
+      description: delete Organization by id
+      parameters:
+        - in: path
+          name: organizationId
+          required: true
+          type: string
+          description: |
+            delete organization by id
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: |
+            *OK* - Specific Organization Will be returned Successfully
+          schema:
+            $ref: '#/definitions/Organization'
+        '404':
+          description: |
+            *Error* - Not Found
+          schema:
+            $ref: '#/definitions/Error'
+        '419':
+          description: |
+            *Error* - Conflict
+          schema:
+            $ref: '#/definitions/Error'
+        '500':
+          description: |
+            *Error* - Internal Server error
+          schema:
+            $ref: '#/definitions/Error'
+
+
   /department:
     get:
       operationId: getDepartment
@@ -1110,4 +1364,3 @@ definitions:
       - Nurse
       - Medical Technologiest
       - Medical Attendant
-
