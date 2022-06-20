@@ -1137,11 +1137,7 @@ definitions:
         description: |
           Organization id
       status:
-        type: boolean
-        description: |
-          Status of Department
-      organizationDetails:
-        $ref: '#/definitions/Organization'
+        $ref: "#/definitions/DepartmentStatus"
       pocDetails:
         $ref: '#/definitions/ContactMedium'
       startingDate:
@@ -1364,3 +1360,9 @@ definitions:
       - Nurse
       - Medical Technologiest
       - Medical Attendant
+
+  DepartmentStatus:
+    type: string
+    enum:
+      - Active
+      - Inactive
