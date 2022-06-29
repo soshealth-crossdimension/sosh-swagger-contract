@@ -1260,7 +1260,7 @@ definitions:
       serviceExperience:
         type: string
         description: |
-          job experience of the Service Provider
+          job experience of the Service Provider in years
       grade:
         $ref: '#/definitions/ServiceProviderGrade'
       registrationStatus:
@@ -1351,7 +1351,9 @@ definitions:
         $ref: '#/definitions/GenderRef'
       contact:
         $ref: '#/definitions/ContactMedium'
-      address:
+      permanentAddress:
+        $ref: '#/definitions/AddressRef'
+      presentAddress:
         $ref: '#/definitions/AddressRef'
 
   Organization:
