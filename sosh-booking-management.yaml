@@ -1,6 +1,6 @@
 swagger: '2.0'
 host: soshealth.in
-basePath: /dataManagement/v1
+basePath: /booking-management/v1
 schemes:
   - https
   - http
@@ -9,72 +9,29 @@ consumes:
 produces:
   - application/json
 paths:
-  /serviceProvider:
-    get:
-      operationId: getserviceProviders
-      tags:
-        - Service Provider Management
-      summary: List of Service Providers available
-      description: Produces List of Service Providers available
-      consumes:
-        - application/json
-      produces:
-        - application/json
-      parameters:
-        - in: query
-          name: filters
-          type: array
-          description: |
-            - supported qualifiers [==, >=, !=, <=, =@]
-            - ";" will act as filter separator
-            - "," will act as value separator in a particular filter
-          items:
-            type: string
-      responses:
-        '200':
-          description: |
-            *OK* - List of Service Providers Will be returned Successfully
-          schema:
-            type: array
-            items:
-              $ref: '#/definitions/ServiceProvider'
-        '400':
-          description: |
-            *Error* - Bad Request
-          schema:
-            $ref: '#/definitions/Error'
-        '404':
-          description: |
-            *Error* - Not Found
-          schema:
-            $ref: '#/definitions/Error'
-        '500':
-          description: |
-            *Error* - Internal Server error
-          schema:
-            $ref: '#/definitions/Error'
+  /booking:
+   
     post:
-      operationId: saveServiceProvider
+      operationId: createBooking
       tags:
-        - Service Provider Management
-      summary: Insertion of Service Provider
-      description: Creates New entry of a Service Provider
+        - Booking created As Inprogress Status
+      description: Create
       consumes:
         - application/json
       produces:
         - application/json
       parameters:
         - in: body
-          name: Service Provider Input
+          name: Booking Input
           required: true
           schema:
-            $ref: '#/definitions/ServiceProvider'
+            $ref: '#/definitions/BookingInput'
       responses:
         '200':
           description: |
             *OK* - Inserted Service Provider Will be returned Successfully
           schema:
-            $ref: '#/definitions/ServiceProvider'
+            $ref: '#/definitions/BookingDetails'
         '400':
           description: |
             *Error* - Bad Request
@@ -90,945 +47,29 @@ paths:
             *Error* - Internal Server error
           schema:
             $ref: '#/definitions/Error'
-    patch:
-      operationId: updateServiceProvider
-      tags:
-        - Service Provider Management
-      summary: Service Provider Updation by filter
-      description: Produces List of Service Providers
-      parameters:
-        - in: query
-          name: filters
-          type: array
-          description: |
-            - supported qualifiers [==, >=, !=, <=, =@]
-            - ";" will act as filter separator
-            - "," will act as value separator in a particular filter
-          items:
-            type: string
-        - in: body
-          name: Patch Element
-          required: true
-          schema:
-            $ref: '#/definitions/PatchElement'
-          description: |
-            "Service Provider patch element"
-      consumes:
-        - application/json
-      produces:
-        - application/json
-      responses:
-        '200':
-          description: |
-            *OK* - Specific Service Provider Will be returned Successfully
-          schema:
-            type: array
-            items:
-              $ref: '#/definitions/ServiceProvider'
-        '404':
-          description: |
-            *Error* - Not Found
-          schema:
-            $ref: '#/definitions/Error'
-        '419':
-          description: |
-            *Error* - Conflict
-          schema:
-            $ref: '#/definitions/Error'
-        '500':
-          description: |
-            *Error* - Internal Server error
-          schema:
-            $ref: '#/definitions/Error'
-    delete:
-      operationId: deleteServiceProviders
-      tags:
-        - Service Provider Management
-      summary: Service Provider Deletion by filter
-      description: delete Service Provider
-      parameters:
-        - in: query
-          name: filters
-          type: array
-          description: |
-            - supported qualifiers [==, >=, !=, <=, =@]
-            - ";" will act as filter separator
-            - "," will act as value separator in a particular filter
-          items:
-            type: string
-      consumes:
-        - application/json
-      produces:
-        - application/json
-      responses:
-        '200':
-          description: |
-            *OK* - Specific Service Provider Will be returned Successfully
-          schema:
-            type: array
-            items:
-              $ref: '#/definitions/ServiceProvider'
-        '404':
-          description: |
-            *Error* - Not Found
-          schema:
-            $ref: '#/definitions/Error'
-        '419':
-          description: |
-            *Error* - Conflict
-          schema:
-            $ref: '#/definitions/Error'
-        '500':
-          description: |
-            *Error* - Internal Server error
-          schema:
-            $ref: '#/definitions/Error'
-  /serviceProvider/{serviceProviderId}:
-    get:
-      operationId: getServiceProviderById
-      tags:
-        - Service Provider Management
-      summary: Service Provider By Id
-      description: Produces Service Provider for the Id
-      consumes:
-        - application/json
-      produces:
-        - application/json
-      parameters:
-        - in: path
-          name: serviceProviderId
-          required: true
-          type: string
-          description: |
-            Service Provider By Id
-      responses:
-        '200':
-          description: |
-            *OK* - List of Service Providers Will be returned Successfully
-          schema:
-            $ref: '#/definitions/ServiceProvider'
-        '400':
-          description: |
-            *Error* - Bad Request
-          schema:
-            $ref: '#/definitions/Error'
-        '404':
-          description: |
-            *Error* - Not Found
-          schema:
-            $ref: '#/definitions/Error'
-        '500':
-          description: |
-            *Error* - Internal Server error
-          schema:
-            $ref: '#/definitions/Error'
-    delete:
-      operationId: deleteServiceProviderById
-      tags:
-        - Service Provider Management
-      summary: Service Provider Deletion by Id
-      description: delete Service Provider by id
-      parameters:
-        - in: path
-          name: serviceProviderId
-          required: true
-          type: string
-          description: |
-            delete Service Provider by id
-      consumes:
-        - application/json
-      produces:
-        - application/json
-      responses:
-        '200':
-          description: |
-            *OK* - Specific Service Provider Will be returned Successfully
-          schema:
-            $ref: '#/definitions/ServiceProvider'
-        '404':
-          description: |
-            *Error* - Not Found
-          schema:
-            $ref: '#/definitions/Error'
-        '419':
-          description: |
-            *Error* - Conflict
-          schema:
-            $ref: '#/definitions/Error'
-        '500':
-          description: |
-            *Error* - Internal Server error
-          schema:
-            $ref: '#/definitions/Error'
-
-  /organization:
-    get:
-      operationId: getOrganization
-      tags:
-        - Organization Management
-      summary: List of Organizations available
-      description: Produces List of Organizations available
-      consumes:
-        - application/json
-      produces:
-        - application/json
-      parameters:
-        - in: query
-          name: filters
-          type: array
-          description: |
-            - supported qualifiers [==, >=, !=, <=, =@]
-            - ";" will act as filter separator
-            - "," will act as value separator in a particular filter
-          items:
-            type: string
-      responses:
-        '200':
-          description: |
-            *OK* - List of OPDs Will be returned Successfully
-          schema:
-            type: array
-            items:
-              $ref: '#/definitions/Organization'
-        '400':
-          description: |
-            *Error* - Bad Request
-          schema:
-            $ref: '#/definitions/Error'
-        '404':
-          description: |
-            *Error* - Not Found
-          schema:
-            $ref: '#/definitions/Error'
-        '500':
-          description: |
-            *Error* - Internal Server error
-          schema:
-            $ref: '#/definitions/Error'
-    post:
-      operationId: saveOrganization
-      tags:
-        - Organization Management
-      summary: Insertion of Organization
-      description: Creates New entry of a Organization
-      consumes:
-        - application/json
-      produces:
-        - application/json
-      parameters:
-        - in: body
-          name: Organization Input
-          required: true
-          schema:
-            $ref: '#/definitions/Organization'
-      responses:
-        '200':
-          description: |
-            *OK* - Inserted Organization Will be returned Successfully
-          schema:
-            $ref: '#/definitions/Organization'
-        '400':
-          description: |
-            *Error* - Bad Request
-          schema:
-            $ref: '#/definitions/Error'
-        '404':
-          description: |
-            *Error* - Not Found
-          schema:
-            $ref: '#/definitions/Error'
-        '500':
-          description: |
-            *Error* - Internal Server error
-          schema:
-            $ref: '#/definitions/Error'
-    patch:
-      operationId: updateOrganization
-      tags:
-        - Organization Management
-      summary: Organization Updation by filter
-      description: Produces List of Organizations
-      parameters:
-        - in: query
-          name: filters
-          type: array
-          description: |
-            - supported qualifiers [==, >=, !=, <=, =@]
-            - ";" will act as filter separator
-            - "," will act as value separator in a particular filter
-          items:
-            type: string
-        - in: body
-          name: Patch Element
-          required: true
-          schema:
-            $ref: '#/definitions/PatchElement'
-          description: |
-            "Organization patch element"
-      consumes:
-        - application/json
-      produces:
-        - application/json
-      responses:
-        '200':
-          description: |
-            *OK* - Specific Organization Will be returned Successfully
-          schema:
-            type: array
-            items:
-              $ref: '#/definitions/Organization'
-        '404':
-          description: |
-            *Error* - Not Found
-          schema:
-            $ref: '#/definitions/Error'
-        '419':
-          description: |
-            *Error* - Conflict
-          schema:
-            $ref: '#/definitions/Error'
-        '500':
-          description: |
-            *Error* - Internal Server error
-          schema:
-            $ref: '#/definitions/Error'
-    delete:
-      operationId: deleteOrganization
-      tags:
-        - Organization Management
-      summary: Organization Deletion by filter
-      description: delete Organization
-      parameters:
-        - in: query
-          name: filters
-          type: array
-          description: |
-            - supported qualifiers [==, >=, !=, <=, =@]
-            - ";" will act as filter separator
-            - "," will act as value separator in a particular filter
-          items:
-            type: string
-      consumes:
-        - application/json
-      produces:
-        - application/json
-      responses:
-        '200':
-          description: |
-            *OK* - Specific Organization Will be returned Successfully
-          schema:
-            type: array
-            items:
-              $ref: '#/definitions/Organization'
-        '404':
-          description: |
-            *Error* - Not Found
-          schema:
-            $ref: '#/definitions/Error'
-        '419':
-          description: |
-            *Error* - Conflict
-          schema:
-            $ref: '#/definitions/Error'
-        '500':
-          description: |
-            *Error* - Internal Server error
-          schema:
-            $ref: '#/definitions/Error'
-  /organization/{organizationId}:
-    get:
-      operationId: getOrganizationById
-      tags:
-        - Organization Management
-      summary: Organization By Id
-      description: Produces Organization for the Id
-      consumes:
-        - application/json
-      produces:
-        - application/json
-      parameters:
-        - in: path
-          name: organizationId
-          required: true
-          type: string
-          description: |
-            Organization By Id
-      responses:
-        '200':
-          description: |
-            *OK* - List of Organizations Will be returned Successfully
-          schema:
-            $ref: '#/definitions/Organization'
-        '400':
-          description: |
-            *Error* - Bad Request
-          schema:
-            $ref: '#/definitions/Error'
-        '404':
-          description: |
-            *Error* - Not Found
-          schema:
-            $ref: '#/definitions/Error'
-        '500':
-          description: |
-            *Error* - Internal Server error
-          schema:
-            $ref: '#/definitions/Error'
-    delete:
-      operationId: deleteOrganizationById
-      tags:
-        - Organization Management
-      summary: Organization Deletion by Id
-      description: delete Organization by id
-      parameters:
-        - in: path
-          name: organizationId
-          required: true
-          type: string
-          description: |
-            delete organization by id
-      consumes:
-        - application/json
-      produces:
-        - application/json
-      responses:
-        '200':
-          description: |
-            *OK* - Specific Organization Will be returned Successfully
-          schema:
-            $ref: '#/definitions/Organization'
-        '404':
-          description: |
-            *Error* - Not Found
-          schema:
-            $ref: '#/definitions/Error'
-        '419':
-          description: |
-            *Error* - Conflict
-          schema:
-            $ref: '#/definitions/Error'
-        '500':
-          description: |
-            *Error* - Internal Server error
-          schema:
-            $ref: '#/definitions/Error'
-
-
-  /department:
-    get:
-      operationId: getDepartment
-      tags:
-        - Department Management
-      summary: List of Departments available
-      description: Produces List of Departments available
-      consumes:
-        - application/json
-      produces:
-        - application/json
-      parameters:
-        - in: query
-          name: filters
-          type: array
-          description: |
-            - supported qualifiers [==, >=, !=, <=, =@]
-            - ";" will act as filter separator
-            - "," will act as value separator in a particular filter
-          items:
-            type: string
-      responses:
-        '200':
-          description: |
-            *OK* - List of OPDs Will be returned Successfully
-          schema:
-            type: array
-            items:
-              $ref: '#/definitions/Department'
-        '400':
-          description: |
-            *Error* - Bad Request
-          schema:
-            $ref: '#/definitions/Error'
-        '404':
-          description: |
-            *Error* - Not Found
-          schema:
-            $ref: '#/definitions/Error'
-        '500':
-          description: |
-            *Error* - Internal Server error
-          schema:
-            $ref: '#/definitions/Error'
-    post:
-      operationId: saveDepartment
-      tags:
-        - Department Management
-      summary: Insertion of Department
-      description: Creates New entry of a Department
-      consumes:
-        - application/json
-      produces:
-        - application/json
-      parameters:
-        - in: body
-          name: Department Input
-          required: true
-          schema:
-            $ref: '#/definitions/Department'
-      responses:
-        '200':
-          description: |
-            *OK* - Inserted Department Will be returned Successfully
-          schema:
-            $ref: '#/definitions/Department'
-        '400':
-          description: |
-            *Error* - Bad Request
-          schema:
-            $ref: '#/definitions/Error'
-        '404':
-          description: |
-            *Error* - Not Found
-          schema:
-            $ref: '#/definitions/Error'
-        '500':
-          description: |
-            *Error* - Internal Server error
-          schema:
-            $ref: '#/definitions/Error'
-    patch:
-      operationId: updateDepartment
-      tags:
-        - Department Management
-      summary: Department Updation by filter
-      description: Produces List of Departments
-      parameters:
-        - in: query
-          name: filters
-          type: array
-          description: |
-            - supported qualifiers [==, >=, !=, <=, =@]
-            - ";" will act as filter separator
-            - "," will act as value separator in a particular filter
-          items:
-            type: string
-        - in: body
-          name: Patch Element
-          required: true
-          schema:
-            $ref: '#/definitions/PatchElement'
-          description: |
-            "Department patch element"
-      consumes:
-        - application/json
-      produces:
-        - application/json
-      responses:
-        '200':
-          description: |
-            *OK* - Specific Department Will be returned Successfully
-          schema:
-            type: array
-            items:
-              $ref: '#/definitions/Department'
-        '404':
-          description: |
-            *Error* - Not Found
-          schema:
-            $ref: '#/definitions/Error'
-        '419':
-          description: |
-            *Error* - Conflict
-          schema:
-            $ref: '#/definitions/Error'
-        '500':
-          description: |
-            *Error* - Internal Server error
-          schema:
-            $ref: '#/definitions/Error'
-    delete:
-      operationId: deleteDepartment
-      tags:
-        - Department Management
-      summary: Department Deletion by filter
-      description: delete Department
-      parameters:
-        - in: query
-          name: filters
-          type: array
-          description: |
-            - supported qualifiers [==, >=, !=, <=, =@]
-            - ";" will act as filter separator
-            - "," will act as value separator in a particular filter
-          items:
-            type: string
-      consumes:
-        - application/json
-      produces:
-        - application/json
-      responses:
-        '200':
-          description: |
-            *OK* - Specific Department Will be returned Successfully
-          schema:
-            type: array
-            items:
-              $ref: '#/definitions/Department'
-        '404':
-          description: |
-            *Error* - Not Found
-          schema:
-            $ref: '#/definitions/Error'
-        '419':
-          description: |
-            *Error* - Conflict
-          schema:
-            $ref: '#/definitions/Error'
-        '500':
-          description: |
-            *Error* - Internal Server error
-          schema:
-            $ref: '#/definitions/Error'
-  /department/{departmentId}:
-    get:
-      operationId: getDepartmentById
-      tags:
-        - Department Management
-      summary: Department By Id
-      description: Produces Department for the Id
-      consumes:
-        - application/json
-      produces:
-        - application/json
-      parameters:
-        - in: path
-          name: departmentId
-          required: true
-          type: string
-          description: |
-            Department By Id
-      responses:
-        '200':
-          description: |
-            *OK* - List of Departments Will be returned Successfully
-          schema:
-            $ref: '#/definitions/Department'
-        '400':
-          description: |
-            *Error* - Bad Request
-          schema:
-            $ref: '#/definitions/Error'
-        '404':
-          description: |
-            *Error* - Not Found
-          schema:
-            $ref: '#/definitions/Error'
-        '500':
-          description: |
-            *Error* - Internal Server error
-          schema:
-            $ref: '#/definitions/Error'
-    delete:
-      operationId: deleteDepartmentById
-      tags:
-        - Department Management
-      summary: Department Deletion by Id
-      description: delete Department by id
-      parameters:
-        - in: path
-          name: departmentId
-          required: true
-          type: string
-          description: |
-            delete department by id
-      consumes:
-        - application/json
-      produces:
-        - application/json
-      responses:
-        '200':
-          description: |
-            *OK* - Specific Department Will be returned Successfully
-          schema:
-            $ref: '#/definitions/Department'
-        '404':
-          description: |
-            *Error* - Not Found
-          schema:
-            $ref: '#/definitions/Error'
-        '419':
-          description: |
-            *Error* - Conflict
-          schema:
-            $ref: '#/definitions/Error'
-        '500':
-          description: |
-            *Error* - Internal Server error
-          schema:
-            $ref: '#/definitions/Error'
-
-  /customer:
-    get:
-      operationId: getCustomer
-      tags:
-        - Customer Management
-      summary: List of Customers available
-      description: Produces List of Customers available
-      consumes:
-        - application/json
-      produces:
-        - application/json
-      parameters:
-        - in: query
-          name: filters
-          type: array
-          description: |
-            - supported qualifiers [==, >=, !=, <=, =@]
-            - ";" will act as filter separator
-            - "," will act as value separator in a particular filter
-          items:
-            type: string
-      responses:
-        '200':
-          description: |
-            *OK* - List of OPDs Will be returned Successfully
-          schema:
-            type: array
-            items:
-              $ref: '#/definitions/Customer'
-        '400':
-          description: |
-            *Error* - Bad Request
-          schema:
-            $ref: '#/definitions/Error'
-        '404':
-          description: |
-            *Error* - Not Found
-          schema:
-            $ref: '#/definitions/Error'
-        '500':
-          description: |
-            *Error* - Internal Server error
-          schema:
-            $ref: '#/definitions/Error'
-    post:
-      operationId: saveCustomer
-      tags:
-        - Customer Management
-      summary: Insertion of Customer
-      description: Creates New entry of a Customer
-      consumes:
-        - application/json
-      produces:
-        - application/json
-      parameters:
-        - in: body
-          name: Customer Input
-          required: true
-          schema:
-            $ref: '#/definitions/Customer'
-      responses:
-        '200':
-          description: |
-            *OK* - Inserted Customer Will be returned Successfully
-          schema:
-            $ref: '#/definitions/Customer'
-        '400':
-          description: |
-            *Error* - Bad Request
-          schema:
-            $ref: '#/definitions/Error'
-        '404':
-          description: |
-            *Error* - Not Found
-          schema:
-            $ref: '#/definitions/Error'
-        '500':
-          description: |
-            *Error* - Internal Server error
-          schema:
-            $ref: '#/definitions/Error'
-    patch:
-      operationId: updateCustomer
-      tags:
-        - Customer Management
-      summary: Customer Updation by filter
-      description: Produces List of Customers
-      parameters:
-        - in: query
-          name: filters
-          type: array
-          description: |
-            - supported qualifiers [==, >=, !=, <=, =@]
-            - ";" will act as filter separator
-            - "," will act as value separator in a particular filter
-          items:
-            type: string
-        - in: body
-          name: Patch Element
-          required: true
-          schema:
-            $ref: '#/definitions/PatchElement'
-          description: |
-            "Customer patch element"
-      consumes:
-        - application/json
-      produces:
-        - application/json
-      responses:
-        '200':
-          description: |
-            *OK* - Specific Customer Will be returned Successfully
-          schema:
-            type: array
-            items:
-              $ref: '#/definitions/Customer'
-        '404':
-          description: |
-            *Error* - Not Found
-          schema:
-            $ref: '#/definitions/Error'
-        '419':
-          description: |
-            *Error* - Conflict
-          schema:
-            $ref: '#/definitions/Error'
-        '500':
-          description: |
-            *Error* - Internal Server error
-          schema:
-            $ref: '#/definitions/Error'
-    delete:
-      operationId: deleteCustomer
-      tags:
-        - Customer Management
-      summary: Customer Deletion by filter
-      description: delete Customer
-      parameters:
-        - in: query
-          name: filters
-          type: array
-          description: |
-            - supported qualifiers [==, >=, !=, <=, =@]
-            - ";" will act as filter separator
-            - "," will act as value separator in a particular filter
-          items:
-            type: string
-      consumes:
-        - application/json
-      produces:
-        - application/json
-      responses:
-        '200':
-          description: |
-            *OK* - Specific Customer Will be returned Successfully
-          schema:
-            type: array
-            items:
-              $ref: '#/definitions/Customer'
-        '404':
-          description: |
-            *Error* - Not Found
-          schema:
-            $ref: '#/definitions/Error'
-        '419':
-          description: |
-            *Error* - Conflict
-          schema:
-            $ref: '#/definitions/Error'
-        '500':
-          description: |
-            *Error* - Internal Server error
-          schema:
-            $ref: '#/definitions/Error'
-  /customer/{customerId}:
-    get:
-      operationId: getCustomerById
-      tags:
-        - Customer Management
-      summary: Customer By Id
-      description: Produces Customer for the Id
-      consumes:
-        - application/json
-      produces:
-        - application/json
-      parameters:
-        - in: path
-          name: customerId
-          required: true
-          type: string
-          description: |
-            Customer By Id
-      responses:
-        '200':
-          description: |
-            *OK* - List of Customers Will be returned Successfully
-          schema:
-            $ref: '#/definitions/Customer'
-        '400':
-          description: |
-            *Error* - Bad Request
-          schema:
-            $ref: '#/definitions/Error'
-        '404':
-          description: |
-            *Error* - Not Found
-          schema:
-            $ref: '#/definitions/Error'
-        '500':
-          description: |
-            *Error* - Internal Server error
-          schema:
-            $ref: '#/definitions/Error'
-    delete:
-      operationId: deleteCustomerById
-      tags:
-        - Customer Management
-      summary: Customer Deletion by Id
-      description: delete Customer by id
-      parameters:
-        - in: path
-          name: customerId
-          required: true
-          type: string
-          description: |
-            delete customer by id
-      consumes:
-        - application/json
-      produces:
-        - application/json
-      responses:
-        '200':
-          description: |
-            *OK* - Specific Customer Will be returned Successfully
-          schema:
-            $ref: '#/definitions/Customer'
-        '404':
-          description: |
-            *Error* - Not Found
-          schema:
-            $ref: '#/definitions/Error'
-        '419':
-          description: |
-            *Error* - Conflict
-          schema:
-            $ref: '#/definitions/Error'
-        '500':
-          description: |
-            *Error* - Internal Server error
-          schema:
-            $ref: '#/definitions/Error'
+    
+ 
 
 definitions:
+  Error:
+    type: object
+    properties:
+      status:
+        type: string
+        description: |
+          Status of the Error
+      messgae:
+        type: string
+        description: |
+          It will contain detailed message for the Error
+          
   BookingStatus:
     type: string
     enum:
       - COMPLETED
-      - ACCEPTED
+      - INPROGRESS
       - CANCELLED
-      - PROVIDER_NOT_FOUND
-      - PROVIDER_NOT_RESPONDED
-      - YET_TO_BE_SERVED
-      - PAYMENT_DONE
+      - SERVED
       - REFUND_INIT
       - REFUND_COMPLETE
       
@@ -1056,6 +97,34 @@ definitions:
         description: |
           Zipcode for the organization
           
+  CustomerRef:
+    type: object
+    properties:
+      id:
+        type: string
+        description: |
+          Customer ID will be populated
+      fullName:
+        type: string
+        description: |
+          Full Name of the Customer
+          
+  ServiceProviderRef:
+    type: object
+    properties:
+      id:
+        type: string
+        description: |
+          Service Provider ID
+      qualification:
+        type: string
+        description: |
+          Qualification of a Service Provider
+      fee:
+        type: integer
+        description: |
+          Fees of Service provider
+        
   BookingDetails:
     type: object
     properties:
@@ -1063,6 +132,10 @@ definitions:
         type: string
         description: | 
           Booking ID must unique
+      deviceId: 
+        type: string
+        description: | 
+          From which Device this booking is been made
       bookingDate:
         type: string
         description: |
@@ -1071,14 +144,10 @@ definitions:
         type: integer
         description: |
           This OTP must be Booking OTP which needs to be validated before Servicing
-      serviceProviderId:
-        type: string
-        description: | 
-          This will carry the serviceProvider ID with details on request
-      customerId:
-        type: string
-        description: |
-          This will contain customer ID
+      serviceProvider:
+        $ref: '#/definitions/ServiceProviderRef'
+      customer:
+        $ref: '#/definitions/CustomerRef'
       serviceAddress:
         $ref: '#/definitions/AddressRef'
       bookingStatus:
@@ -1090,11 +159,31 @@ definitions:
         description: | 
           Payment / Transaction ID
           
-        
+  BookingInput:
+    type: object
+    properties:
+      deviceId: 
+        type: string
+        description: | 
+          From which Device this booking is been made
+      serviceProviderId:
+        type: string
+        description: |
+          Service Provider Id
+      customerId: 
+        type : string
+        description: |
+          Customer ID for booking
+      serviceAddress:
+        $ref: '#/definitions/AddressRef'
+      bookingStatus:
+        $ref: '#/definitions/BookingStatus'
+      serviceStatus:
+        $ref: '#/definitions/ServiceStatus'
+      
   ServiceStatus:
     type: string
     enum:
       - COMPLETED
-      - DECLINED
       - ACCEPTED
       
