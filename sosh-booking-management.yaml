@@ -196,4 +196,5 @@ definitions:
       - COMPLETED
       - DECLINED
       - ACCEPTED
+      - INTRANSIT
       
