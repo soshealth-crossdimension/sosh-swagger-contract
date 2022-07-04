@@ -14,8 +14,8 @@ paths:
     post:
       operationId: createBooking
       tags:
-        - Booking created As Inprogress Status
-      description: Create
+        - Booking Management
+      description: Create Booking from Customer side as Inprogress
       consumes:
         - application/json
       produces:
@@ -72,6 +72,13 @@ definitions:
       - SERVED
       - REFUND_INIT
       - REFUND_COMPLETE
+  
+  PaymentMode:
+    type: string
+    enum:
+      - Online
+      - COD
+      - NotSelected
       
   AddressRef:
     type: object
@@ -158,6 +165,8 @@ definitions:
         type: string
         description: | 
           Payment / Transaction ID
+      paymentMode:
+        $ref: '#/definitions/PaymentMode'
           
   BookingInput:
     type: object
@@ -185,5 +194,6 @@ definitions:
     type: string
     enum:
       - COMPLETED
+      - DECLINED
       - ACCEPTED
       
