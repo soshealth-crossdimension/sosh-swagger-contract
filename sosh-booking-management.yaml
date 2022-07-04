@@ -104,6 +104,14 @@ definitions:
         description: |
           It will contain detailed message for the Error
           
+  PaymentStatus:
+    type: string
+    enum:
+      - CANCELLED
+      - CONFIRMED
+      - FAILED
+      - PARTIAL
+          
   BookingStatus:
     type: string
     enum:
@@ -123,11 +131,9 @@ definitions:
         description: | 
           After Payment Payment ID to be updated.
       paymentStatus:
-        type: string
-        description: |
-          Payment status to be updated.
+        $ref: '#/definitions/PaymentStatus'
       paymentMode:
-         $ref: '#/definitions/PaymentMode'
+        $ref: '#/definitions/PaymentMode'
       serviceProviderId:
         type: string
         description: |
