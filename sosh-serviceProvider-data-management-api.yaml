@@ -1022,7 +1022,7 @@ paths:
     get:
       operationId: getServiceProviderData
       tags:
-        - ServiceProviderData Management
+        - Service Provider Data Management
       summary: List of ServiceProviderData
       description: Produces List of ServiceProviderData available
       consumes:
@@ -1065,7 +1065,7 @@ paths:
     post:
       operationId: saveServiceProviderData
       tags:
-        - ServiceProviderData Management
+        - Service Provider Data Management
       summary: Insertion of ServiceProviderData
       description: Creates New entry of a ServiceProviderData
       consumes:
@@ -1102,7 +1102,7 @@ paths:
     patch:
       operationId: updateServiceProviderData
       tags:
-        - ServiceProviderData Management
+        - Service Provider Data Management
       summary: ServiceProviderData Updation by filter
       description: Produces List of ServiceProviderData
       parameters:
@@ -1152,7 +1152,7 @@ paths:
     delete:
       operationId: deleteServiceProviderData
       tags:
-        - ServiceProviderData Management
+        - Service Provider Data Management
       summary: ServiceProviderData Deletion by filter
       description: delete ServiceProviderData
       parameters:
@@ -1504,53 +1504,54 @@ definitions:
   GenderRef:
     type: string
     enum:
-      - Male
-      - Female
-      - Transgender
-      - Undisclosed
+      - MALE
+      - FEMALE
+      - TRANSGENDER
+      - UNDISCLOSED
 
   SalutationRef:
     type: string
     enum:
-      - Dr.
-      - Mr.
-      - Mrs.
-      - Ms.
+      - DR
+      - MR
+      - MRS
+      - MS
 
   RegistraionStatus:
     type: string
     enum:
-      - Applied
-      - Approved
-      - Rejected
-      - Pending
+      - APPLIED
+      - APPROVED
+      - REJECTED
+      - PENDING
 
   ServiceStatus:
     type: string
     enum:
-      - Online
-      - Offline
-      - Engaged
+      - ONLINE
+      - OFFLINE
+      - ENGAGED
+      - RESERVED
 
   ServiceType:
     type: string
     enum:
-      - Doctor
-      - Nurse
-      - Medical Technologiest
-      - Medical Attendant
+      - DOCTOR
+      - NURSE
+      - MEDICAL_TECHNOLOGIST
+      - MEDICAL_ATTENDANT
 
   DepartmentStatus:
     type: string
     enum:
-      - Active
-      - Inactive
+      - ACTIVE
+      - INACTIVE
   
   ServiceProviderGrade:
     type: string
     enum:
-      - 1st
-      - 2nd
-      - 3rd
-      - 4th
-      - 5th
+      - ONE
+      - TWO
+      - THREE
+      - FOUR
+      - FIVE
