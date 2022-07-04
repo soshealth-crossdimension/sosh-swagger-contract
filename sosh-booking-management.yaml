@@ -113,6 +113,7 @@ definitions:
       - SERVED
       - REFUND_INIT
       - REFUND_COMPLETE
+      - CONFIRMED
   
   UpdateModel:
     type: object
