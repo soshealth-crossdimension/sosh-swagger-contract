@@ -29,7 +29,7 @@ paths:
       responses:
         '200':
           description: |
-            *OK* - Inserted Service Provider Will be returned Successfully
+            *OK* - Inserted Booking Details Will be returned Successfully
           schema:
             $ref: '#/definitions/BookingDetails'
         '400':
@@ -47,8 +47,49 @@ paths:
             *Error* - Internal Server error
           schema:
             $ref: '#/definitions/Error'
+            
+  /booking/{bookingId}:  
+    put:
+      operationId: updateBooking
+      tags:
+        - Booking Management
+      description: Create Booking from Customer side as Inprogress
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: UpdateInput
+          required: true
+          schema:
+            $ref: '#/definitions/UpdateModel'
+        - in: path
+          name: bookingId
+          required: true
+          type: string
     
- 
+      responses:
+        '200':
+          description: |
+            *OK* - Updated Put Operation will update the booking details
+          schema:
+            $ref: '#/definitions/BookingDetails'
+        '400':
+          description: |
+            *Error* - Bad Request
+          schema:
+            $ref: '#/definitions/Error'
+        '404':
+          description: |
+            *Error* - Not Found
+          schema:
+            $ref: '#/definitions/Error'
+        '500':
+          description: |
+            *Error* - Internal Server error
+          schema:
+            $ref: '#/definitions/Error'
 
 definitions:
   Error:
@@ -72,6 +113,24 @@ definitions:
       - SERVED
       - REFUND_INIT
       - REFUND_COMPLETE
+  
+  UpdateModel:
+    type: object
+    properties:
+      paymentId:
+        type: string
+        description: | 
+          After Payment Payment ID to be updated.
+      paymentStatus:
+        type: string
+        description: |
+          Payment status to be updated.
+      paymentMode:
+         $ref: '#/definitions/PaymentMode'
+      serviceProviderId:
+        type: string
+        description: |
+          If Service Provider changes then details of provider needs to be updated.
   
   PaymentMode:
     type: string
