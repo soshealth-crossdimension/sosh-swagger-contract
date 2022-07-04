@@ -131,6 +131,10 @@ definitions:
         type: integer
         description: |
           Fees of Service provider
+      fullName:
+        type: string
+        description: |
+          Full Name of a Service Provider must be visible 
         
   BookingDetails:
     type: object
