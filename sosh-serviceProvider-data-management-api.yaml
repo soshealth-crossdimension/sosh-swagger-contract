@@ -1224,10 +1224,6 @@ definitions:
         type: string
         description: |
           last name of a Service Provider
-      fullName:
-        type: string
-        description: |
-          full name of Service Provider
       departmentId:
         type: string
         description: |
@@ -1538,8 +1534,8 @@ definitions:
     enum:
       - DOCTOR
       - NURSE
-      - MEDICAL_TECHNOLOGIST
-      - MEDICAL_ATTENDANT
+      - MEDICAL TECHNOLOGIST
+      - MEDICAL ATTENDANT
 
   DepartmentStatus:
     type: string
