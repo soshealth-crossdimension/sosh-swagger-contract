@@ -1258,7 +1258,9 @@ definitions:
         description: |
           job experience of the Service Provider in years
       grade:
-        $ref: '#/definitions/ServiceProviderGrade'
+        type: number
+        description: |
+          grade will be between 1 to 5 where 1 means best
       registrationStatus:
         $ref: '#/definitions/RegistraionStatus'
       serviceStatus:
@@ -1543,11 +1545,3 @@ definitions:
       - ACTIVE
       - INACTIVE
   
-  ServiceProviderGrade:
-    type: string
-    enum:
-      - ONE
-      - TWO
-      - THREE
-      - FOUR
-      - FIVE
