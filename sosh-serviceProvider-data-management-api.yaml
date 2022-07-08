@@ -1198,7 +1198,7 @@ definitions:
     type: object
     required: 
       - id
-      - aadharId
+      - aadhaarId
       - qualification
       - serviceType
     properties:
@@ -1206,10 +1206,10 @@ definitions:
         type: string
         description: |
           Id of Particular Service Provider 
-      aadharId:
+      aadhaarId:
         type: string
         description: |
-          Aadhar Id of Particular Service Provider 
+          Aadhaar Id of Particular Service Provider 
       salutation:
         $ref: '#/definitions/SalutationRef'
       firstName:
@@ -1258,7 +1258,7 @@ definitions:
         description: |
           job experience of the Service Provider in years
       grade:
-        type: integer
+        type: number
         description: |
           grade will be between 1 to 5 where 1 means best
       registrationStatus:
@@ -1315,16 +1315,16 @@ definitions:
     type: object
     required: 
       - id
-      - aadharId
+      - aadhaarId
     properties:
       id:
         type: string
         description: |
           Id of Particular Customer 
-      aadharId:
+      aadhaarId:
         type: string
         description: |
-          Aadhar Id of Particular Customer 
+          Aadhaar Id of Particular Customer 
       firstName:
         type: string
         description: |
@@ -1536,8 +1536,8 @@ definitions:
     enum:
       - DOCTOR
       - NURSE
-      - MEDICAL TECHNOLOGIST
-      - MEDICAL ATTENDANT
+      - MEDICAL_TECHNOLOGIST
+      - MEDICAL_ATTENDANT
 
   DepartmentStatus:
     type: string
