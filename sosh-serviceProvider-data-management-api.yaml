@@ -1192,6 +1192,56 @@ paths:
             *Error* - Internal Server error
           schema:
             $ref: '#/definitions/Error'
+  
+  /serviceProvidersWithDistance:
+    get:
+      operationId: getServiceProvidersByDistance
+      tags:
+        - Service Provider Data Management
+      summary: List of Service Providers sort by distance
+      description: Produces List of Service Providers available in a distance
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: query
+          name: customerLocation
+          type: string
+          description: |
+            - location of the customer
+        - in: query
+          name: filters
+          type: array
+          description: |
+            - supported qualifiers [==, >=, !=, <=, =@]
+            - ";" will act as filter separator
+            - "," will act as value separator in a particular filter
+          items:
+            type: string
+      responses:
+        '200':
+          description: |
+            *OK* - List of OPDs Will be returned Successfully
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ServiceProviderResponse'
+        '400':
+          description: |
+            *Error* - Bad Request
+          schema:
+            $ref: '#/definitions/Error'
+        '404':
+          description: |
+            *Error* - Not Found
+          schema:
+            $ref: '#/definitions/Error'
+        '500':
+          description: |
+            *Error* - Internal Server error
+          schema:
+            $ref: '#/definitions/Error'
 
 definitions:
   ServiceProvider:
@@ -1272,9 +1322,13 @@ definitions:
       contact:
         $ref: '#/definitions/ContactMedium'
       permanentAddress:
-        $ref: '#/definitions/AddressRef'
+        type: string
+        description: |
+          permanent address of service provider
       presentAddress:
-        $ref: '#/definitions/AddressRef'
+        type: string
+        description: |
+          present address of service provider
   
   Department:
     type: object
@@ -1350,9 +1404,13 @@ definitions:
       contact:
         $ref: '#/definitions/ContactMedium'
       permanentAddress:
-        $ref: '#/definitions/AddressRef'
+        type: string
+        description: |
+          permanent address of service provider
       presentAddress:
-        $ref: '#/definitions/AddressRef'
+        type: string
+        description: |
+          present address of service provider
 
   Organization:
     type: object
@@ -1442,6 +1500,26 @@ definitions:
         type: string
         description: |
           Zipcode for the organization
+
+  DistanceRef:
+    type: object
+    properties:
+      text:
+        type: string
+        description: |
+          distance in kms
+      value:
+        type: integer
+        description: |
+          distance in meters
+  
+  ServiceProviderResponse:
+    type: object
+    properties:
+      serviceProvider:
+        $ref: '#/definitions/ServiceProvider'
+      distance:
+        $ref: '#/definitions/DistanceRef'
 
   OrganizationType:
     type: string
