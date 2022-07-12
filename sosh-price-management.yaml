@@ -1,0 +1,96 @@
+swagger: '2.0'
+host: soshealth.in
+basePath: /price-management/v1
+schemes:
+  - https
+  - http
+consumes:
+  - application/json
+produces:
+  - application/json
+paths:
+  
+      
+definitions:
+  Error:
+    type: object
+    properties:
+      status:
+        type: string
+        description: |
+          Status of the Error
+      messgae:
+        type: string
+        description: |
+          It will contain detailed message for the Error
+          
+  TransactionHistory:
+    type: object
+    properties:
+      id:
+        type: string
+        description: |
+          Transaction ID fro each Transaction to be done
+      recipientId:
+        type: string
+        description: | 
+          Transaction Recipient Id - Typically Service Provider ID
+      senderId:
+        type: string
+        description: |
+          Typically End user's Id - Customer Id
+      transactionAmount:
+        $ref: '#/definitions/Amount'
+      transactionDate:
+        type: string
+        description: |
+          On which Date Transaction Happened
+      transactionStatus:
+        type: string
+        description: |
+          Transaction Status would be filter parameter
+      transactionMode:
+        $ref: '#/definitions/TransactionMode'
+  
+  TransactionMode:
+    type: string
+    enum:
+    - ONLINE
+    - COD
+    
+  Price:
+    type: object
+    properties:
+      id: 
+        type: string
+        description: |
+          Price Id would be primary key for Price table and same as Provider's Id
+      actualPrice:
+        $ref: '#/definitions/Amount'
+      customerPrice:
+        $ref: '#/definitions/Amount'
+      deductionRate:
+        type: number
+        description: |
+          Rate on which actual and Customer price will be deducted
+      taxRate:
+        type: number
+        description: |
+          Rate on which TDS will be deducted
+      taxAmount:
+        $ref: '#/definitions/Amount'
+      taxDeductedServiceCharge:
+        $ref: '#/definitions/Amount'
+        
+  Amount:
+    type: object
+    properties:
+      unit:
+        type: string
+        description: |
+          Price Amount Unit | INR , Dollar , Euro
+      value:
+        type: string
+        description: | 
+          Value of object
+         
