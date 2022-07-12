@@ -14,8 +14,8 @@ paths:
     post:
       operationId: createBooking
       tags:
-        - Booking created As Inprogress Status
-      description: Create
+        - Booking Management
+      description: Create Booking from Customer side as Inprogress
       consumes:
         - application/json
       produces:
@@ -29,7 +29,7 @@ paths:
       responses:
         '200':
           description: |
-            *OK* - Inserted Service Provider Will be returned Successfully
+            *OK* - Inserted Booking Details Will be returned Successfully
           schema:
             $ref: '#/definitions/BookingDetails'
         '400':
@@ -47,9 +47,165 @@ paths:
             *Error* - Internal Server error
           schema:
             $ref: '#/definitions/Error'
+            
+    get:
+      operationId: getBookings
+      tags:
+        - Booking Management
+      description: Get Booking from DB Depending on query clauses
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: query
+          name: filters
+          type: array
+          description: |
+            - supported qualifiers [==, >=, !=, <=, =@]
+            - ";" will act as filter separator
+            - "," will act as value separator in a particular filter
+          items:
+            type: string
+      responses:
+        '200':
+          description: |
+            *OK* - Inserted Booking Details Will be returned Successfully
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/BookingDetails'
+        '400':
+          description: |
+            *Error* - Bad Request
+          schema:
+            $ref: '#/definitions/Error'
+        '404':
+          description: |
+            *Error* - Not Found
+          schema:
+            $ref: '#/definitions/Error'
+        '500':
+          description: |
+            *Error* - Internal Server error
+          schema:
+            $ref: '#/definitions/Error'
+            
+  /booking/{bookingId}:  
+    put:
+      operationId: updateBooking
+      tags:
+        - Booking Management
+      description: Create Booking from Customer side as Inprogress, This will be idempotent call thats why choose PUT in place of PATCH.
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: UpdateInput
+          required: true
+          schema:
+            $ref: '#/definitions/UpdateModel'
+        - in: path
+          name: bookingId
+          required: true
+          type: string
     
- 
-
+      responses:
+        '200':
+          description: |
+            *OK* - Updated Put Operation will update the booking details
+          schema:
+            $ref: '#/definitions/BookingDetails'
+        '400':
+          description: |
+            *Error* - Bad Request
+          schema:
+            $ref: '#/definitions/Error'
+        '404':
+          description: |
+            *Error* - Not Found
+          schema:
+            $ref: '#/definitions/Error'
+        '500':
+          description: |
+            *Error* - Internal Server error
+          schema:
+            $ref: '#/definitions/Error'
+    get:
+      operationId: getBookingById
+      tags:
+        - Booking Management
+      description: Get Booking Details by Booking ID
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: bookingId
+          required: true
+          type: string
+    
+      responses:
+        '200':
+          description: |
+            *OK* - Updated Put Operation will update the booking details
+          schema:
+            $ref: '#/definitions/BookingDetails'
+        '400':
+          description: |
+            *Error* - Bad Request
+          schema:
+            $ref: '#/definitions/Error'
+        '404':
+          description: |
+            *Error* - Not Found
+          schema:
+            $ref: '#/definitions/Error'
+        '500':
+          description: |
+            *Error* - Internal Server error
+          schema:
+            $ref: '#/definitions/Error'
+    delete:
+      operationId: deleteBooking
+      tags:
+        - Booking Management
+      description: Delete Booking by Booking ID
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: bookingId
+          required: true
+          type: string
+    
+      responses:
+        '200':
+          description: |
+            *OK* - Delete the booking details
+          schema:
+            $ref: '#/definitions/BookingDetails'
+        '400':
+          description: |
+            *Error* - Bad Request
+          schema:
+            $ref: '#/definitions/Error'
+        '404':
+          description: |
+            *Error* - Not Found
+          schema:
+            $ref: '#/definitions/Error'
+        '500':
+          description: |
+            *Error* - Internal Server error
+          schema:
+            $ref: '#/definitions/Error'
+      
 definitions:
   Error:
     type: object
@@ -63,15 +219,46 @@ definitions:
         description: |
           It will contain detailed message for the Error
           
+  PaymentStatus:
+    type: string
+    enum:
+      - CANCELLED
+      - CONFIRMED
+      - FAILED
+      - PARTIAL
+          
   BookingStatus:
     type: string
     enum:
       - COMPLETED
       - INPROGRESS
       - CANCELLED
-      - SERVED
       - REFUND_INIT
       - REFUND_COMPLETE
+      - CONFIRMED
+  
+  UpdateModel:
+    type: object
+    properties:
+      paymentId:
+        type: string
+        description: | 
+          After Payment Payment ID to be updated.
+      paymentStatus:
+        $ref: '#/definitions/PaymentStatus'
+      paymentMode:
+        $ref: '#/definitions/PaymentMode'
+      serviceProviderId:
+        type: string
+        description: |
+          If Service Provider changes then details of provider needs to be updated.
+  
+  PaymentMode:
+    type: string
+    enum:
+      - Online
+      - COD
+      - NotSelected
       
   AddressRef:
     type: object
@@ -124,6 +311,10 @@ definitions:
         type: integer
         description: |
           Fees of Service provider
+      fullName:
+        type: string
+        description: |
+          Full Name of a Service Provider must be visible 
         
   BookingDetails:
     type: object
@@ -158,6 +349,8 @@ definitions:
         type: string
         description: | 
           Payment / Transaction ID
+      paymentMode:
+        $ref: '#/definitions/PaymentMode'
           
   BookingInput:
     type: object
@@ -185,5 +378,7 @@ definitions:
     type: string
     enum:
       - COMPLETED
+      - DECLINED
       - ACCEPTED
+      - INTRANSIT
       

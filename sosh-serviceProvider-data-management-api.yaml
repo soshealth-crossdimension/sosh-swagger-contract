@@ -1017,14 +1017,238 @@ paths:
             *Error* - Internal Server error
           schema:
             $ref: '#/definitions/Error'
+  
+  /serviceProviderData:
+    get:
+      operationId: getServiceProviderData
+      tags:
+        - Service Provider Data Management
+      summary: List of ServiceProviderData
+      description: Produces List of ServiceProviderData available
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: query
+          name: filters
+          type: array
+          description: |
+            - supported qualifiers [==, >=, !=, <=, =@]
+            - ";" will act as filter separator
+            - "," will act as value separator in a particular filter
+          items:
+            type: string
+      responses:
+        '200':
+          description: |
+            *OK* - List of OPDs Will be returned Successfully
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ServiceProviderData'
+        '400':
+          description: |
+            *Error* - Bad Request
+          schema:
+            $ref: '#/definitions/Error'
+        '404':
+          description: |
+            *Error* - Not Found
+          schema:
+            $ref: '#/definitions/Error'
+        '500':
+          description: |
+            *Error* - Internal Server error
+          schema:
+            $ref: '#/definitions/Error'
+    post:
+      operationId: saveServiceProviderData
+      tags:
+        - Service Provider Data Management
+      summary: Insertion of ServiceProviderData
+      description: Creates New entry of a ServiceProviderData
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: ServiceProviderData Input
+          required: true
+          schema:
+            $ref: '#/definitions/ServiceProviderData'
+      responses:
+        '200':
+          description: |
+            *OK* - Inserted ServiceProviderData Will be returned Successfully
+          schema:
+            $ref: '#/definitions/ServiceProviderData'
+        '400':
+          description: |
+            *Error* - Bad Request
+          schema:
+            $ref: '#/definitions/Error'
+        '404':
+          description: |
+            *Error* - Not Found
+          schema:
+            $ref: '#/definitions/Error'
+        '500':
+          description: |
+            *Error* - Internal Server error
+          schema:
+            $ref: '#/definitions/Error'
+    patch:
+      operationId: updateServiceProviderData
+      tags:
+        - Service Provider Data Management
+      summary: ServiceProviderData Updation by filter
+      description: Produces List of ServiceProviderData
+      parameters:
+        - in: query
+          name: filters
+          type: array
+          description: |
+            - supported qualifiers [==, >=, !=, <=, =@]
+            - ";" will act as filter separator
+            - "," will act as value separator in a particular filter
+          items:
+            type: string
+        - in: body
+          name: Patch Element
+          required: true
+          schema:
+            $ref: '#/definitions/PatchElement'
+          description: |
+            "ServiceProviderData patch element"
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: |
+            *OK* - Specific ServiceProviderData Will be returned Successfully
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ServiceProviderData'
+        '404':
+          description: |
+            *Error* - Not Found
+          schema:
+            $ref: '#/definitions/Error'
+        '419':
+          description: |
+            *Error* - Conflict
+          schema:
+            $ref: '#/definitions/Error'
+        '500':
+          description: |
+            *Error* - Internal Server error
+          schema:
+            $ref: '#/definitions/Error'
+    delete:
+      operationId: deleteServiceProviderData
+      tags:
+        - Service Provider Data Management
+      summary: ServiceProviderData Deletion by filter
+      description: delete ServiceProviderData
+      parameters:
+        - in: query
+          name: filters
+          type: array
+          description: |
+            - supported qualifiers [==, >=, !=, <=, =@]
+            - ";" will act as filter separator
+            - "," will act as value separator in a particular filter
+          items:
+            type: string
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: |
+            *OK* - Specific ServiceProviderData Will be returned Successfully
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ServiceProviderData'
+        '404':
+          description: |
+            *Error* - Not Found
+          schema:
+            $ref: '#/definitions/Error'
+        '419':
+          description: |
+            *Error* - Conflict
+          schema:
+            $ref: '#/definitions/Error'
+        '500':
+          description: |
+            *Error* - Internal Server error
+          schema:
+            $ref: '#/definitions/Error'
+  
+  /serviceProvidersWithDistance:
+    get:
+      operationId: getServiceProvidersByDistance
+      tags:
+        - Service Provider Data Management
+      summary: List of Service Providers sort by distance
+      description: Produces List of Service Providers available in a distance
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: query
+          name: customerLocation
+          type: string
+          description: |
+            - location of the customer
+        - in: query
+          name: filters
+          type: array
+          description: |
+            - supported qualifiers [==, >=, !=, <=, =@]
+            - ";" will act as filter separator
+            - "," will act as value separator in a particular filter
+          items:
+            type: string
+      responses:
+        '200':
+          description: |
+            *OK* - List of OPDs Will be returned Successfully
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ServiceProviderResponse'
+        '400':
+          description: |
+            *Error* - Bad Request
+          schema:
+            $ref: '#/definitions/Error'
+        '404':
+          description: |
+            *Error* - Not Found
+          schema:
+            $ref: '#/definitions/Error'
+        '500':
+          description: |
+            *Error* - Internal Server error
+          schema:
+            $ref: '#/definitions/Error'
 
 definitions:
   ServiceProvider:
     type: object
     required: 
       - id
-      - aadharId
-      - departmentId
+      - aadhaarId
       - qualification
       - serviceType
     properties:
@@ -1032,10 +1256,10 @@ definitions:
         type: string
         description: |
           Id of Particular Service Provider 
-      aadharId:
+      aadhaarId:
         type: string
         description: |
-          Aadhar Id of Particular Service Provider 
+          Aadhaar Id of Particular Service Provider 
       salutation:
         $ref: '#/definitions/SalutationRef'
       firstName:
@@ -1050,10 +1274,6 @@ definitions:
         type: string
         description: |
           last name of a Service Provider
-      fullName:
-        type: string
-        description: |
-          full name of Service Provider
       departmentId:
         type: string
         description: |
@@ -1086,23 +1306,11 @@ definitions:
       serviceExperience:
         type: string
         description: |
-          job experience of the Service Provider
-      totalServiceProvided:
-        type: number
-        description: |
-          total number of service provided
-      rating:
-        type: string
-        description: |
-          average rating by user
-      fee:
+          job experience of the Service Provider in years
+      grade:
         type: integer
         description: |
-          fee to be shown in the UI for booking
-      baseFee:
-        type: integer
-        description: |
-          actual charge for the service provider
+          grade will be between 1 to 5 where 1 means best
       registrationStatus:
         $ref: '#/definitions/RegistraionStatus'
       serviceStatus:
@@ -1113,8 +1321,14 @@ definitions:
         $ref: '#/definitions/DepartmentType'
       contact:
         $ref: '#/definitions/ContactMedium'
-      address:
-        $ref: '#/definitions/AddressRef'
+      permanentAddress:
+        type: string
+        description: |
+          permanent address of service provider
+      presentAddress:
+        type: string
+        description: |
+          present address of service provider
   
   Department:
     type: object
@@ -1155,16 +1369,16 @@ definitions:
     type: object
     required: 
       - id
-      - aadharId
+      - aadhaarId
     properties:
       id:
         type: string
         description: |
           Id of Particular Customer 
-      aadharId:
+      aadhaarId:
         type: string
         description: |
-          Aadhar Id of Particular Customer 
+          Aadhaar Id of Particular Customer 
       firstName:
         type: string
         description: |
@@ -1189,8 +1403,14 @@ definitions:
         $ref: '#/definitions/GenderRef'
       contact:
         $ref: '#/definitions/ContactMedium'
-      address:
-        $ref: '#/definitions/AddressRef'
+      permanentAddress:
+        type: string
+        description: |
+          permanent address of service provider
+      presentAddress:
+        type: string
+        description: |
+          present address of service provider
 
   Organization:
     type: object
@@ -1221,6 +1441,21 @@ definitions:
           Country where its situated
       organizationType:
         $ref: '#/definitions/OrganizationType'
+  
+  ServiceProviderData:
+    type: object
+    required:
+      - serviceProviderType
+      - documentList
+    properties:
+      serviceProviderType:
+        $ref: '#/definitions/ServiceType'
+      documentList:
+        type: array
+        items: 
+          type: string
+          description: |
+            list of documents need to be submitted
 
   ContactMedium:
     type: object
@@ -1265,6 +1500,26 @@ definitions:
         type: string
         description: |
           Zipcode for the organization
+
+  DistanceRef:
+    type: object
+    properties:
+      text:
+        type: string
+        description: |
+          distance in kms
+      value:
+        type: integer
+        description: |
+          distance in meters
+  
+  ServiceProviderResponse:
+    type: object
+    properties:
+      serviceProvider:
+        $ref: '#/definitions/ServiceProvider'
+      distance:
+        $ref: '#/definitions/DistanceRef'
 
   OrganizationType:
     type: string
@@ -1325,44 +1580,46 @@ definitions:
   GenderRef:
     type: string
     enum:
-      - Male
-      - Female
-      - Transgender
-      - Undisclosed
+      - MALE
+      - FEMALE
+      - TRANSGENDER
+      - UNDISCLOSED
 
   SalutationRef:
     type: string
     enum:
-      - Dr.
-      - Mr.
-      - Mrs.
-      - Ms.
+      - DR
+      - MR
+      - MRS
+      - MS
 
   RegistraionStatus:
     type: string
     enum:
-      - Applied
-      - Approved
-      - Rejected
-      - Pending
+      - APPLIED
+      - APPROVED
+      - REJECTED
+      - PENDING
 
   ServiceStatus:
     type: string
     enum:
-      - Online
-      - Offline
-      - Engaged
+      - ONLINE
+      - OFFLINE
+      - ENGAGED
+      - RESERVED
 
   ServiceType:
     type: string
     enum:
-      - Doctor
-      - Nurse
-      - Medical Technologiest
-      - Medical Attendant
+      - DOCTOR
+      - NURSE
+      - MEDICAL_TECHNOLOGIST
+      - MEDICAL_ATTENDANT
 
   DepartmentStatus:
     type: string
     enum:
-      - Active
-      - Inactive
+      - ACTIVE
+      - INACTIVE
+  
