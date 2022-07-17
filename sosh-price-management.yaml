@@ -9,9 +9,65 @@ consumes:
 produces:
   - application/json
 paths:
+  /pricing:
+   
+    post:
+      operationId: createPricing
+      tags:
+        - Price Management
+      description: Create Pricing for Service Provider
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: Price Input
+          required: true
+          schema:
+            $ref: '#/definitions/PriceInput'
+      responses:
+        '200':
+          description: |
+            *OK* - Inserted Pricing Details Will be returned Successfully
+          schema:
+            $ref: '#/definitions/Price'
+        '400':
+          description: |
+            *Error* - Bad Request
+          schema:
+            $ref: '#/definitions/Error'
+        '404':
+          description: |
+            *Error* - Not Found
+          schema:
+            $ref: '#/definitions/Error'
+        '500':
+          description: |
+            *Error* - Internal Server error
+          schema:
+            $ref: '#/definitions/Error'
   
       
 definitions:
+  PriceInput:
+    type: object
+    properties:
+      id: 
+        type: string
+        description: |
+          Price Id would be primary key for Price table and same as Provider's Id
+      actualPrice:
+        $ref: '#/definitions/Amount'
+      deductionRate:
+        type: number
+        description: |
+          Rate on which actual and Customer price will be deducted
+      taxRate:
+        type: number
+        description: |
+          Rate on which TDS will be deducted
+    
   Error:
     type: object
     properties:
@@ -59,28 +115,16 @@ definitions:
     - COD
     
   Price:
-    type: object
-    properties:
-      id: 
-        type: string
-        description: |
-          Price Id would be primary key for Price table and same as Provider's Id
-      actualPrice:
-        $ref: '#/definitions/Amount'
-      customerPrice:
-        $ref: '#/definitions/Amount'
-      deductionRate:
-        type: number
-        description: |
-          Rate on which actual and Customer price will be deducted
-      taxRate:
-        type: number
-        description: |
-          Rate on which TDS will be deducted
-      taxAmount:
-        $ref: '#/definitions/Amount'
-      taxDeductedServiceCharge:
-        $ref: '#/definitions/Amount'
+    allOf:
+      - $ref: '#/definitions/PriceInput'
+      - type: object
+        properties:
+          customerPrice:
+            $ref: '#/definitions/Amount'
+          taxAmount:
+            $ref: '#/definitions/Amount'
+          taxDeductedServiceCharge:
+            $ref: '#/definitions/Amount'
         
   Amount:
     type: object
