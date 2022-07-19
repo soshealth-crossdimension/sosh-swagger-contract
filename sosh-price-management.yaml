@@ -119,6 +119,10 @@ definitions:
       - $ref: '#/definitions/PriceInput'
       - type: object
         properties:
+          id:
+            type: string
+            description: |
+              This will Basically the same as service provider id
           customerPrice:
             $ref: '#/definitions/Amount'
           taxAmount:
