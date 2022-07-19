@@ -53,7 +53,7 @@ definitions:
   PriceInput:
     type: object
     properties:
-      id: 
+      serviceProviderId: 
         type: string
         description: |
           Price Id would be primary key for Price table and same as Provider's Id
