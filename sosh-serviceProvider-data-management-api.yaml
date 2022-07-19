@@ -1062,142 +1062,12 @@ paths:
             *Error* - Internal Server error
           schema:
             $ref: '#/definitions/Error'
-    post:
-      operationId: saveServiceProviderData
-      tags:
-        - Service Provider Data Management
-      summary: Insertion of ServiceProviderData
-      description: Creates New entry of a ServiceProviderData
-      consumes:
-        - application/json
-      produces:
-        - application/json
-      parameters:
-        - in: body
-          name: ServiceProviderData Input
-          required: true
-          schema:
-            $ref: '#/definitions/ServiceProviderData'
-      responses:
-        '200':
-          description: |
-            *OK* - Inserted ServiceProviderData Will be returned Successfully
-          schema:
-            $ref: '#/definitions/ServiceProviderData'
-        '400':
-          description: |
-            *Error* - Bad Request
-          schema:
-            $ref: '#/definitions/Error'
-        '404':
-          description: |
-            *Error* - Not Found
-          schema:
-            $ref: '#/definitions/Error'
-        '500':
-          description: |
-            *Error* - Internal Server error
-          schema:
-            $ref: '#/definitions/Error'
-    patch:
-      operationId: updateServiceProviderData
-      tags:
-        - Service Provider Data Management
-      summary: ServiceProviderData Updation by filter
-      description: Produces List of ServiceProviderData
-      parameters:
-        - in: query
-          name: filters
-          type: array
-          description: |
-            - supported qualifiers [==, >=, !=, <=, =@]
-            - ";" will act as filter separator
-            - "," will act as value separator in a particular filter
-          items:
-            type: string
-        - in: body
-          name: Patch Element
-          required: true
-          schema:
-            $ref: '#/definitions/PatchElement'
-          description: |
-            "ServiceProviderData patch element"
-      consumes:
-        - application/json
-      produces:
-        - application/json
-      responses:
-        '200':
-          description: |
-            *OK* - Specific ServiceProviderData Will be returned Successfully
-          schema:
-            type: array
-            items:
-              $ref: '#/definitions/ServiceProviderData'
-        '404':
-          description: |
-            *Error* - Not Found
-          schema:
-            $ref: '#/definitions/Error'
-        '419':
-          description: |
-            *Error* - Conflict
-          schema:
-            $ref: '#/definitions/Error'
-        '500':
-          description: |
-            *Error* - Internal Server error
-          schema:
-            $ref: '#/definitions/Error'
-    delete:
-      operationId: deleteServiceProviderData
-      tags:
-        - Service Provider Data Management
-      summary: ServiceProviderData Deletion by filter
-      description: delete ServiceProviderData
-      parameters:
-        - in: query
-          name: filters
-          type: array
-          description: |
-            - supported qualifiers [==, >=, !=, <=, =@]
-            - ";" will act as filter separator
-            - "," will act as value separator in a particular filter
-          items:
-            type: string
-      consumes:
-        - application/json
-      produces:
-        - application/json
-      responses:
-        '200':
-          description: |
-            *OK* - Specific ServiceProviderData Will be returned Successfully
-          schema:
-            type: array
-            items:
-              $ref: '#/definitions/ServiceProviderData'
-        '404':
-          description: |
-            *Error* - Not Found
-          schema:
-            $ref: '#/definitions/Error'
-        '419':
-          description: |
-            *Error* - Conflict
-          schema:
-            $ref: '#/definitions/Error'
-        '500':
-          description: |
-            *Error* - Internal Server error
-          schema:
-            $ref: '#/definitions/Error'
-  
+
   /serviceProvidersWithDistance:
     get:
       operationId: getServiceProvidersByDistance
       tags:
-        - Service Provider Data Management
+        - Service Provider Distance Management
       summary: List of Service Providers sort by distance
       description: Produces List of Service Providers available in a distance
       consumes:
@@ -1290,7 +1160,7 @@ definitions:
         type: array
         items: 
           type: string
-          format: byte
+          format: binary
           description: |
             pdf version of all the submitted doc
       registrationDate:
