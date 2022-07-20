@@ -1,6 +1,6 @@
 swagger: '2.0'
 host: soshealth.in
-basePath: /dataManagement/v1
+basePath: /sosDataManagement/v1
 schemes:
   - https
   - http
@@ -1261,10 +1261,6 @@ definitions:
         type: string
         description: |
           last name of a Customer
-      fullName:
-        type: string
-        description: |
-          full name of Customer
       createdDate:
         type: string
         description: |
