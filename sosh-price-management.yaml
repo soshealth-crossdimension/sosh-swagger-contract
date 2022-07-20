@@ -10,7 +10,6 @@ produces:
   - application/json
 paths:
   /pricing:
-   
     post:
       operationId: createPricing
       tags:
@@ -47,13 +46,146 @@ paths:
             *Error* - Internal Server error
           schema:
             $ref: '#/definitions/Error'
-  
+            
+    get:
+      operationId: getProviderPricing
+      tags:
+        - Price Management
+      description: Get Pricing for Service Provider
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: query
+          name: serviceId
+          required: true
+          type: string
+          description: |
+            * Accepts multiple values "," separated
+            * The value "All" is for getting All price details. (Not Case Sensitive)
+            
+      responses:
+        '200':
+          description: |
+            *OK* - Inserted Pricing Details Will be returned Successfully
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Price'
+        '400':
+          description: |
+            *Error* - Bad Request
+          schema:
+            $ref: '#/definitions/Error'
+        '404':
+          description: |
+            *Error* - Not Found
+          schema:
+            $ref: '#/definitions/Error'
+        '500':
+          description: |
+            *Error* - Internal Server error
+          schema:
+            $ref: '#/definitions/Error'
+            
+  /transaction:
+    post:
+      operationId: createTransaction
+      tags:
+        - Transaction Management
+      description: Create Transaction for Service Provider
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: Transaction Input
+          required: true
+          schema:
+            $ref: '#/definitions/TransactionHistory'
+      responses:
+        '200':
+          description: |
+            *OK* - Inserted Transaction Details Will be returned Successfully
+          schema:
+            $ref: '#/definitions/TransactionHistory'
+        '400':
+          description: |
+            *Error* - Bad Request
+          schema:
+            $ref: '#/definitions/Error'
+        '404':
+          description: |
+            *Error* - Not Found
+          schema:
+            $ref: '#/definitions/Error'
+        '500':
+          description: |
+            *Error* - Internal Server error
+          schema:
+            $ref: '#/definitions/Error'
+            
+    get:
+      operationId: getTransaction
+      tags:
+        - Transaction Management
+      description: Get Transactions
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: query
+          name: transactionId
+          required: false
+          type: string
+          description: |
+            * Accepts multiple values "," separated
+            * The value "All" is for getting All Transaction details. (Not Case Sensitive)
+        - in: query
+          name: transactionStatus
+          required: false
+          type: string
+          description: |
+            * Accepts multiple values "," separated
+        - in: query
+          name: transactionMode
+          required: false
+          type: string
+          description: |
+            * Accepts multiple values "," separated
+            
+      responses:
+        '200':
+          description: |
+            *OK* - Inserted Pricing Details Will be returned Successfully
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/TransactionHistory'
+        '400':
+          description: |
+            *Error* - Bad Request
+          schema:
+            $ref: '#/definitions/Error'
+        '404':
+          description: |
+            *Error* - Not Found
+          schema:
+            $ref: '#/definitions/Error'
+        '500':
+          description: |
+            *Error* - Internal Server error
+          schema:
+            $ref: '#/definitions/Error'
       
 definitions:
   PriceInput:
     type: object
     properties:
-      serviceProviderId: 
+      id: 
         type: string
         description: |
           Price Id would be primary key for Price table and same as Provider's Id
@@ -102,9 +234,7 @@ definitions:
         description: |
           On which Date Transaction Happened
       transactionStatus:
-        type: string
-        description: |
-          Transaction Status would be filter parameter
+        $ref: '#/definitions/TransactionStatus'
       transactionMode:
         $ref: '#/definitions/TransactionMode'
   
@@ -114,15 +244,19 @@ definitions:
     - ONLINE
     - COD
     
+  TransactionStatus:
+    type: string
+    description: |
+      Transaction Status would be filter parameter
+    enum:
+    - RECEIVED
+    - REFUND
+    
   Price:
     allOf:
       - $ref: '#/definitions/PriceInput'
       - type: object
         properties:
-          id:
-            type: string
-            description: |
-              This will Basically the same as service provider id
           customerPrice:
             $ref: '#/definitions/Amount'
           taxAmount:
