@@ -1,6 +1,6 @@
 swagger: '2.0'
 host: soshealth.in
-basePath: /booking-management/v1
+basePath: /sosBookingManagement/v1
 schemes:
   - https
   - http
