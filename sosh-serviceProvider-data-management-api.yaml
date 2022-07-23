@@ -1462,10 +1462,10 @@ definitions:
   RegistraionStatus:
     type: string
     enum:
-      - APPLIED
+      - PENDING
       - APPROVED
       - REJECTED
-      - PENDING
+      - REAPPLY
 
   ServiceStatus:
     type: string
