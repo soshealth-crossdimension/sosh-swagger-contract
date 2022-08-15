@@ -1022,7 +1022,7 @@ paths:
     get:
       operationId: getServiceProviderData
       tags:
-        - Service Provider Data Management
+        - Misc
       summary: List of ServiceProviderData
       description: Produces List of ServiceProviderData available
       consumes:
@@ -1067,7 +1067,7 @@ paths:
     get:
       operationId: getServiceProvidersByDistance
       tags:
-        - Service Provider Distance Management
+        - Misc
       summary: List of Service Providers sort by distance
       description: Produces List of Service Providers available in a distance
       consumes:
@@ -1113,6 +1113,89 @@ paths:
           schema:
             $ref: '#/definitions/Error'
 
+  /departmentByServiceType:
+    get:
+      operationId: getDepartmentListByServiceType
+      tags:
+        - Misc
+      summary: List of Departments per Service Type
+      description: Produces List of Departments enabled for each service types
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: query
+          name: filters
+          type: array
+          description: |
+            - supported qualifiers [==, >=, !=, <=, =@]
+            - ";" will act as filter separator
+            - "," will act as value separator in a particular filter
+          items:
+            type: string
+      responses:
+        '200':
+          description: |
+            *OK* - List of OPDs Will be returned Successfully
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/EnabledDepartment'
+        '400':
+          description: |
+            *Error* - Bad Request
+          schema:
+            $ref: '#/definitions/Error'
+        '404':
+          description: |
+            *Error* - Not Found
+          schema:
+            $ref: '#/definitions/Error'
+        '500':
+          description: |
+            *Error* - Internal Server error
+          schema:
+            $ref: '#/definitions/Error'
+    post:
+      operationId: saveDepartmentWithServiceType
+      tags:
+        - Misc
+      summary: Insertion of Department
+      description: Creates New entry of a Department
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: Department Ref Input
+          required: true
+          schema:
+            $ref: '#/definitions/DepartmentRef'
+      responses:
+        '200':
+          description: |
+            *OK* - Inserted Department Will be returned Successfully
+          schema:
+            $ref: '#/definitions/Department'
+        '400':
+          description: |
+            *Error* - Bad Request
+          schema:
+            $ref: '#/definitions/Error'
+        '404':
+          description: |
+            *Error* - Not Found
+          schema:
+            $ref: '#/definitions/Error'
+        '500':
+          description: |
+            *Error* - Internal Server error
+          schema:
+            $ref: '#/definitions/Error'
+
+
 definitions:
   ServiceProvider:
     type: object
@@ -1144,6 +1227,11 @@ definitions:
         type: string
         description: |
           last name of a Service Provider
+      profilePic:
+        type: string
+        format: binary
+        description: |
+          profile picture of service provider
       departmentId:
         type: string
         description: |
@@ -1261,6 +1349,11 @@ definitions:
         type: string
         description: |
           last name of a Customer
+      profilePic:
+        type: string
+        format: binary
+        description: |
+          profile picture of service provider
       createdDate:
         type: string
         description: |
@@ -1416,6 +1509,19 @@ definitions:
           description: |
             Object Path to be Patched
 
+  EnabledDepartment:
+    type: object
+    properties:
+      serviceType:
+        $ref: '#/definitions/ServiceType'
+      departmentList:
+        type: array
+        items: 
+          type: string
+          description: |
+            list of departments enabled for each service type
+            
+
   Error:
     type: object
     properties:
@@ -1488,4 +1594,12 @@ definitions:
     enum:
       - ACTIVE
       - INACTIVE
+  
+  DepartmentRef:
+    type: object
+    properties:
+      department:
+        $ref: '#/definitions/Department'
+      serviceType:
+        $ref: '#/definitions/ServiceType'
   
