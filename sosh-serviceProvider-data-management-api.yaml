@@ -285,7 +285,7 @@ paths:
       responses:
         '200':
           description: |
-            *OK* - List of OPDs Will be returned Successfully
+            *OK* - List of Organizations Will be returned Successfully
           schema:
             type: array
             items:
@@ -538,7 +538,7 @@ paths:
       responses:
         '200':
           description: |
-            *OK* - List of OPDs Will be returned Successfully
+            *OK* - List of Departments Will be returned Successfully
           schema:
             type: array
             items:
@@ -790,7 +790,7 @@ paths:
       responses:
         '200':
           description: |
-            *OK* - List of OPDs Will be returned Successfully
+            *OK* - List of Customers Will be returned Successfully
           schema:
             type: array
             items:
@@ -1042,7 +1042,7 @@ paths:
       responses:
         '200':
           description: |
-            *OK* - List of OPDs Will be returned Successfully
+            *OK* - List of Service Provider Required Docs Will be returned Successfully
           schema:
             type: array
             items:
@@ -1092,7 +1092,7 @@ paths:
       responses:
         '200':
           description: |
-            *OK* - List of OPDs Will be returned Successfully
+            *OK* - List of ServiceProviders Will be returned Successfully
           schema:
             type: array
             items:
@@ -1137,11 +1137,9 @@ paths:
       responses:
         '200':
           description: |
-            *OK* - List of OPDs Will be returned Successfully
+            *OK* - List of departments Will be returned Successfully
           schema:
-            type: array
-            items:
-              $ref: '#/definitions/EnabledDepartment'
+            $ref: '#/definitions/EnabledDepartment'
         '400':
           description: |
             *Error* - Bad Request
@@ -1194,6 +1192,7 @@ paths:
             *Error* - Internal Server error
           schema:
             $ref: '#/definitions/Error'
+
 
 
 definitions:
