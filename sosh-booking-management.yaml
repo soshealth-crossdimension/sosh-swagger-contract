@@ -91,6 +91,8 @@ paths:
           schema:
             $ref: '#/definitions/Error'
             
+  
+            
   /booking/{bookingId}:  
     put:
       operationId: updateBooking
@@ -190,6 +192,46 @@ paths:
             *OK* - Delete the booking details
           schema:
             $ref: '#/definitions/BookingDetails'
+        '400':
+          description: |
+            *Error* - Bad Request
+          schema:
+            $ref: '#/definitions/Error'
+        '404':
+          description: |
+            *Error* - Not Found
+          schema:
+            $ref: '#/definitions/Error'
+        '500':
+          description: |
+            *Error* - Internal Server error
+          schema:
+            $ref: '#/definitions/Error'
+  
+  /pastBooking/{customerId}:
+    get:
+      operationId: getPastBookings
+      tags:
+        - Booking History
+      description: Get past booking of a specific customer
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: customerId
+          required: true
+          type: string
+    
+      responses:
+        '200':
+          description: |
+            *OK* - Fetch the past booking details of a customer
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/BookingDetails'
         '400':
           description: |
             *Error* - Bad Request
