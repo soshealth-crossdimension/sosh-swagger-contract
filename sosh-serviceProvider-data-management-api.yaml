@@ -1126,14 +1126,10 @@ paths:
         - application/json
       parameters:
         - in: query
-          name: filters
-          type: array
+          name: serviceType
+          type: string
           description: |
-            - supported qualifiers [==, >=, !=, <=, =@]
-            - ";" will act as filter separator
-            - "," will act as value separator in a particular filter
-          items:
-            type: string
+            provide the service type to get the departments list
       responses:
         '200':
           description: |
@@ -1515,10 +1511,8 @@ definitions:
         $ref: '#/definitions/ServiceType'
       departmentList:
         type: array
-        items: 
-          type: string
-          description: |
-            list of departments enabled for each service type
+        items:
+          $ref: '#/definitions/Department'
             
 
   Error:
