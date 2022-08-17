@@ -427,8 +427,6 @@ definitions:
           Customer ID for booking
       serviceAddress:
         $ref: '#/definitions/AddressRef'
-      bookingStatus:
-        $ref: '#/definitions/BookingStatus'
       serviceStatus:
         $ref: '#/definitions/ServiceStatus'
       patinetDetails:
