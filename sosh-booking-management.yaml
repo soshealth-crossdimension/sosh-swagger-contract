@@ -438,7 +438,7 @@ definitions:
       customerId:
         type: string
       bookingOTP:
-        type: string
+        type: integer
       
   AddressRef:
     type: object
