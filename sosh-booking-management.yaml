@@ -93,6 +93,7 @@ paths:
             
   /booking/{bookingId}:  
     put:
+      deprecated: true
       operationId: updateBooking
       tags:
         - Booking Management
