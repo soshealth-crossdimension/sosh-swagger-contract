@@ -271,7 +271,7 @@ definitions:
     type: string
     enum:
       - COMPLETED
-      - INPROGRESS
+      - PENDING
       - CANCELLED
       - REFUND_INIT
       - REFUND_COMPLETE
