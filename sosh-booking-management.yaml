@@ -247,6 +247,88 @@ paths:
           schema:
             $ref: '#/definitions/Error'
             
+  /currentBooking/{customerId}:
+    get:
+      operationId: getCurrentBooking
+      tags:
+        - Booking History
+      description: Get past booking of a specific customer
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: customerId
+          required: true
+          type: string
+    
+      responses:
+        '200':
+          description: |
+            *OK* - Fetch the past booking details of a customer
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/BookingDetails'
+        '400':
+          description: |
+            *Error* - Bad Request
+          schema:
+            $ref: '#/definitions/Error'
+        '404':
+          description: |
+            *Error* - Not Found
+          schema:
+            $ref: '#/definitions/Error'
+        '500':
+          description: |
+            *Error* - Internal Server error
+          schema:
+            $ref: '#/definitions/Error'
+  /updatePayment/{bookingId}:
+    post:
+      operationId: updatePayment
+      tags:
+        - Payment Management
+      description: Update payment for a specific booking when payment is done after create booking with COD
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: UpdatePaymentDetails
+          required: true
+          schema:
+            $ref: '#/definitions/PaymentDetailsRef'
+        - in: path
+          name: bookingId
+          required: true
+          type: string
+    
+      responses:
+        '200':
+          description: |
+            *OK* - Updated Put Operation will update the booking details
+          schema:
+            $ref: '#/definitions/BookingDetails'
+        '400':
+          description: |
+            *Error* - Bad Request
+          schema:
+            $ref: '#/definitions/Error'
+        '404':
+          description: |
+            *Error* - Not Found
+          schema:
+            $ref: '#/definitions/Error'
+        '500':
+          description: |
+            *Error* - Internal Server error
+          schema:
+            $ref: '#/definitions/Error'
+            
 definitions:
   Error:
     type: object
