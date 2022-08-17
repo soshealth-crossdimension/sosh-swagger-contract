@@ -91,8 +91,6 @@ paths:
           schema:
             $ref: '#/definitions/Error'
             
-  
-            
   /booking/{bookingId}:  
     put:
       operationId: updateBooking
@@ -247,7 +245,7 @@ paths:
             *Error* - Internal Server error
           schema:
             $ref: '#/definitions/Error'
-      
+            
 definitions:
   Error:
     type: object
@@ -267,7 +265,7 @@ definitions:
       - CANCELLED
       - CONFIRMED
       - FAILED
-      - PARTIAL
+      - PENDING
           
   BookingStatus:
     type: string
@@ -350,7 +348,7 @@ definitions:
         description: |
           Qualification of a Service Provider
       fee:
-        type: integer
+        type: number
         description: |
           Fees of Service provider
       fullName:
@@ -381,19 +379,37 @@ definitions:
         $ref: '#/definitions/ServiceProviderRef'
       customer:
         $ref: '#/definitions/CustomerRef'
+      patientDetails:
+        $ref: '#/definitions/PatientDetailsRef'
       serviceAddress:
         $ref: '#/definitions/AddressRef'
       bookingStatus:
         $ref: '#/definitions/BookingStatus'
       serviceStatus:
         $ref: '#/definitions/ServiceStatus'
+      paymentDetails:
+        $ref: '#/definitions/PaymentDetailsRef'
+        
+  PaymentDetailsRef:
+    type: object
+    properties:
       paymentId:
         type: string
         description: | 
           Payment / Transaction ID
       paymentMode:
         $ref: '#/definitions/PaymentMode'
-          
+      amount:
+        type: number
+        description: |
+          Fees of Service provider  
+      paymentStatus:
+        $ref: '#/definitions/PaymentStatus'
+      paymentDate:
+        type: string
+        description: |
+          Payment Date Must be populated
+        
   BookingInput:
     type: object
     properties:
@@ -415,6 +431,31 @@ definitions:
         $ref: '#/definitions/BookingStatus'
       serviceStatus:
         $ref: '#/definitions/ServiceStatus'
+      patinetDetails:
+        $ref: '#/definitions/PatientDetailsRef'
+      paymentDetails:
+        $ref: '#/definitions/PaymentDetailsRef'
+        
+  PatientDetailsRef:
+    type: object
+    properties:
+      firstName:
+        type: string
+      middleName:
+        type: string
+      lastName:
+        type: string
+      age:
+        type: string
+      sex:
+        $ref: '#/definitions/GenderRef'
+        
+  GenderRef:
+    type: string
+    enum:
+      - MALE
+      - FEMALE
+      - CHILD
       
   ServiceStatus:
     type: string
@@ -423,4 +464,3 @@ definitions:
       - DECLINED
       - ACCEPTED
       - INTRANSIT
-      
