@@ -328,7 +328,50 @@ paths:
             *Error* - Internal Server error
           schema:
             $ref: '#/definitions/Error'
-            
+  
+  /verifyBooking/{bookingId}:
+    post:
+      operationId: verifyBooking
+      tags:
+        - Booking Management
+      description: Booking Management verification on otp submit
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: VerifyBooking
+          required: true
+          schema:
+            $ref: '#/definitions/BookingVerification'
+        - in: path
+          name: bookingId
+          required: true
+          type: string
+    
+      responses:
+        '200':
+          description: |
+            *OK* - Updated Put Operation will update the booking details
+          schema:
+            $ref: '#/definitions/BookingDetails'
+        '400':
+          description: |
+            *Error* - Bad Request
+          schema:
+            $ref: '#/definitions/Error'
+        '404':
+          description: |
+            *Error* - Not Found
+          schema:
+            $ref: '#/definitions/Error'
+        '500':
+          description: |
+            *Error* - Internal Server error
+          schema:
+            $ref: '#/definitions/Error'
+  
 definitions:
   Error:
     type: object
@@ -341,7 +384,11 @@ definitions:
         type: string
         description: |
           It will contain detailed message for the Error
-          
+      reason:
+        type: string
+      statusCode:
+        type: string
+        
   PaymentStatus:
     type: string
     enum:
@@ -382,6 +429,16 @@ definitions:
       - Online
       - COD
       - NotSelected
+      
+  BookingVerification:
+    type: object
+    properties:
+      serviceProviderId:
+        type: string
+      customerId:
+        type: string
+      bookingOTP:
+        type: string
       
   AddressRef:
     type: object
