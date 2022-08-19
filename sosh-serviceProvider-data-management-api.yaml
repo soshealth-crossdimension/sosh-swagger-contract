@@ -22,6 +22,10 @@ paths:
         - application/json
       parameters:
         - in: query
+          name: departmentId
+          type: string
+          
+        - in: query
           name: filters
           type: array
           description: |
@@ -98,14 +102,9 @@ paths:
       description: Produces List of Service Providers
       parameters:
         - in: query
-          name: filters
-          type: array
-          description: |
-            - supported qualifiers [==, >=, !=, <=, =@]
-            - ";" will act as filter separator
-            - "," will act as value separator in a particular filter
-          items:
-            type: string
+          name: serviceProviderId
+          type: string
+          
         - in: body
           name: Patch Element
           required: true
@@ -1231,6 +1230,12 @@ definitions:
         type: string
         description: |
           department id
+      departmentIdList:
+        type: array
+        items:
+          type: string
+        description: |
+          Department ID List
       hospitalId:
         type: string
         description: |
@@ -1592,9 +1597,8 @@ definitions:
     type: object
     properties:
       department:
-        $ref: '#/definitions/Department'
-      serviceType:
         type: array
-        items: 
-          $ref: '#/definitions/ServiceType'
-  
+        items:
+          $ref: '#/definitions/Department'
+      serviceType:
+        $ref: '#/definitions/ServiceType'
