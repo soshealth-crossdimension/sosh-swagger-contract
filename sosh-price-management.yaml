@@ -261,7 +261,7 @@ definitions:
             type: string
             description: |
               Price Id would be primary key for Price table and same as Provider's Id
-          customerPrice:
+          actualPrice:
             $ref: '#/definitions/Amount'
           taxAmount:
             $ref: '#/definitions/Amount'
