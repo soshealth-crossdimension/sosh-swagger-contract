@@ -1112,7 +1112,7 @@ paths:
           schema:
             $ref: '#/definitions/Error'
 
-  /departmentByServiceType:
+  /misc/departmentByServiceType:
     get:
       operationId: getDepartmentListByServiceType
       tags:
@@ -1128,13 +1128,13 @@ paths:
           name: serviceType
           type: string
           description: |
-            provide the service type to get the departments list
+            * Must match the enum value of ServiceType 
       responses:
         '200':
           description: |
             *OK* - List of departments Will be returned Successfully
           schema:
-            $ref: '#/definitions/EnabledDepartment'
+            $ref: '#/definitions/DepartmentRef'
         '400':
           description: |
             *Error* - Bad Request
