@@ -1601,7 +1601,15 @@ definitions:
       department:
         type: array
         items:
-          $ref: '#/definitions/Department'
+          $ref: '#/definitions/ModulerDepartmentData'
       serviceType:
         $ref: '#/definitions/ServiceType'
+  
+  ModulerDepartmentData:
+    type: object
+    properties:
+      departmentName:
+        type: string
+      departmentId:
+        type: string
   
