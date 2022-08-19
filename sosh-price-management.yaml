@@ -189,7 +189,7 @@ definitions:
         type: string
         description: |
           Price Id would be primary key for Price table and same as Provider's Id
-      actualPrice:
+      customerPrice:
         $ref: '#/definitions/Amount'
       deductionRate:
         type: number
