@@ -522,7 +522,7 @@ definitions:
       patientDetails:
         $ref: '#/definitions/PatientDetailsRef'
       serviceAddress:
-        $ref: '#/definitions/AddressRef'
+        type: string
       bookingStatus:
         $ref: '#/definitions/BookingStatus'
       serviceStatus:
@@ -566,7 +566,7 @@ definitions:
         description: |
           Customer ID for booking
       serviceAddress:
-        $ref: '#/definitions/AddressRef'
+        type: string
       serviceStatus:
         $ref: '#/definitions/ServiceStatus'
       patinetDetails:
