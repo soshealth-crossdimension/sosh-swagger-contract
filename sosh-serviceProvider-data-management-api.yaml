@@ -1596,9 +1596,12 @@ definitions:
   DepartmentRef:
     type: object
     properties:
+      id:
+        type: string
       department:
         type: array
         items:
           $ref: '#/definitions/Department'
       serviceType:
         $ref: '#/definitions/ServiceType'
+  
