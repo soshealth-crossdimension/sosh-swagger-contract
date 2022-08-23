@@ -509,6 +509,8 @@ definitions:
           profile picture of service provider
       mobile:
         type: string
+      serviceStatus:
+        type: string
       
         
   BookingDetails:
