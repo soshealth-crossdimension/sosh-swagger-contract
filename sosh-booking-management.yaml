@@ -475,6 +475,13 @@ definitions:
         type: string
         description: |
           Full Name of the Customer
+      profilePic:
+        type: string
+        format: binary
+        description: |
+          profile picture of service provider
+      mobile:
+        type: string
           
   ServiceProviderRef:
     type: object
@@ -494,7 +501,15 @@ definitions:
       fullName:
         type: string
         description: |
-          Full Name of a Service Provider must be visible 
+          Full Name of a Service Provider must be visible
+      profilePic:
+        type: string
+        format: binary
+        description: |
+          profile picture of service provider
+      mobile:
+        type: string
+      
         
   BookingDetails:
     type: object
