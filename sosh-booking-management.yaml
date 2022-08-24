@@ -583,7 +583,7 @@ definitions:
       paymentDetails:
         $ref: '#/definitions/PaymentDetailsRef'
       feeDetails:
-        type: string
+        type: number
       departmentDetails:
         $ref: '#/definitions/DepartmentRef'
         
