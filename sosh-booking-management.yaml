@@ -544,6 +544,8 @@ definitions:
         $ref: '#/definitions/PaymentDetailsRef'
       feeDetails:
         type: string
+      departmentDetails:
+        $ref: '#/definitions/DepartmentRef'
         
   PaymentDetailsRef:
     type: object
