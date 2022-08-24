@@ -494,10 +494,6 @@ definitions:
         type: string
         description: |
           Qualification of a Service Provider
-      fee:
-        type: number
-        description: |
-          Fees of Service provider
       fullName:
         type: string
         description: |
@@ -546,6 +542,8 @@ definitions:
         $ref: '#/definitions/ServiceStatus'
       paymentDetails:
         $ref: '#/definitions/PaymentDetailsRef'
+      feeDetails:
+        type: string
         
   PaymentDetailsRef:
     type: object
@@ -590,6 +588,16 @@ definitions:
         $ref: '#/definitions/PatientDetailsRef'
       paymentDetails:
         $ref: '#/definitions/PaymentDetailsRef'
+      departmentDetails:
+        $ref: '#/definitions/DepartmentRef'
+  
+  DepartmentRef:
+    type: object
+    properties:
+      id:
+        type: string
+      name:
+        type: string
         
   PatientDetailsRef:
     type: object
