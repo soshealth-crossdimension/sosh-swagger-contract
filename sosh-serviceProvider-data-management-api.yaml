@@ -1195,9 +1195,8 @@ definitions:
     type: object
     required: 
       - id
-      - aadhaarId
-      - qualification
       - serviceType
+      - deviceId
     properties:
       id:
         type: string
@@ -1207,6 +1206,10 @@ definitions:
         type: string
         description: |
           Aadhaar Id of Particular Service Provider 
+      deviceId:
+        type: string
+        description: |
+          Device Id of Particular Service Provider's mobile
       salutation:
         $ref: '#/definitions/SalutationRef'
       firstName:
@@ -1327,7 +1330,7 @@ definitions:
     type: object
     required: 
       - id
-      - aadhaarId
+      - deviceId
     properties:
       id:
         type: string
@@ -1337,6 +1340,10 @@ definitions:
         type: string
         description: |
           Aadhaar Id of Particular Customer 
+      deviceId:
+        type: string
+        description: |
+          Device Id of Particular Service Provider's mobile
       firstName:
         type: string
         description: |
