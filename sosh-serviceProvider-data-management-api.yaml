@@ -260,6 +260,46 @@ paths:
           schema:
             $ref: '#/definitions/Error'
 
+  /serviceProviderByDevice/{deviceId}:
+    get:
+      operationId: getServiceProviderByDeviceId
+      tags:
+        - Service Provider Management
+      summary: Service Provider By Device Id
+      description: Produces Service Provider for the device Id
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: deviceId
+          required: true
+          type: string
+          description: |
+            Service Provider By device Id
+      responses:
+        '200':
+          description: |
+            *OK* - Service Provider details Will be returned Successfully
+          schema:
+            $ref: '#/definitions/ServiceProvider'
+        '400':
+          description: |
+            *Error* - Bad Request
+          schema:
+            $ref: '#/definitions/Error'
+        '404':
+          description: |
+            *Error* - Not Found
+          schema:
+            $ref: '#/definitions/Error'
+        '500':
+          description: |
+            *Error* - Internal Server error
+          schema:
+            $ref: '#/definitions/Error'
+  
   /organization:
     get:
       operationId: getOrganization
@@ -1009,6 +1049,46 @@ paths:
         '419':
           description: |
             *Error* - Conflict
+          schema:
+            $ref: '#/definitions/Error'
+        '500':
+          description: |
+            *Error* - Internal Server error
+          schema:
+            $ref: '#/definitions/Error'
+  
+  /customerByDevice/{deviceId}:
+    get:
+      operationId: getCustomerByDeviceId
+      tags:
+        - Customer Management
+      summary: Customer By Device Id
+      description: Produces Customer for the device Id
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: deviceId
+          required: true
+          type: string
+          description: |
+            Customer By device Id
+      responses:
+        '200':
+          description: |
+            *OK* - Customer details Will be returned Successfully
+          schema:
+            $ref: '#/definitions/Customer'
+        '400':
+          description: |
+            *Error* - Bad Request
+          schema:
+            $ref: '#/definitions/Error'
+        '404':
+          description: |
+            *Error* - Not Found
           schema:
             $ref: '#/definitions/Error'
         '500':
