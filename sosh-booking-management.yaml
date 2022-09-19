@@ -610,10 +610,6 @@ definitions:
   BookingInput:
     type: object
     properties:
-      deviceId: 
-        type: string
-        description: | 
-          From which Device this booking is been made
       serviceProviderId:
         type: string
         description: |
