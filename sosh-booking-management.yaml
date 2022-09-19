@@ -622,7 +622,7 @@ definitions:
         type: string
       serviceStatus:
         $ref: '#/definitions/ServiceStatus'
-      patinetDetails:
+      patientDetails:
         $ref: '#/definitions/PatientDetailsRef'
       paymentDetails:
         $ref: '#/definitions/PaymentDetailsRef'
