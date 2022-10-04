@@ -1370,6 +1370,10 @@ definitions:
         type: string
         description: |
           present address of service provider
+      hasIndividualFee:
+        type: boolean
+        description: |
+          It will determine that whether price would be departmental or individual
   
   Department:
     type: object
