@@ -1676,7 +1676,9 @@ definitions:
       - DOCTOR
       - NURSE
       - MEDICAL_TECHNOLOGIST
+      - PHYSIOTHERAPIST
       - MEDICAL_ATTENDANT
+      - AMBULANCE
 
   DepartmentStatus:
     type: string
