@@ -94,24 +94,22 @@ paths:
             *Error* - Internal Server error
           schema:
             $ref: '#/definitions/Error'
-    patch:
-      operationId: updateServiceProvider
+    delete:
+      operationId: deleteServiceProviders
       tags:
         - Service Provider Management
-      summary: Service Provider Updation by filter
-      description: Produces List of Service Providers
+      summary: Service Provider Deletion by filter
+      description: delete Service Provider
       parameters:
         - in: query
-          name: serviceProviderId
-          type: string
-          
-        - in: body
-          name: Patch Element
-          required: true
-          schema:
-            $ref: '#/definitions/PatchElement'
+          name: filters
+          type: array
           description: |
-            "Service Provider patch element"
+            - supported qualifiers [==, >=, !=, <=, =@]
+            - ";" will act as filter separator
+            - "," will act as value separator in a particular filter
+          items:
+            type: string
       consumes:
         - application/json
       produces:
@@ -139,22 +137,26 @@ paths:
             *Error* - Internal Server error
           schema:
             $ref: '#/definitions/Error'
-    delete:
-      operationId: deleteServiceProviders
+            
+  /serviceProvider/update:
+    post:
+      operationId: updateServiceProvider
       tags:
         - Service Provider Management
-      summary: Service Provider Deletion by filter
-      description: delete Service Provider
+      summary: Service Provider Updation by filter
+      description: Produces List of Service Providers
       parameters:
         - in: query
-          name: filters
-          type: array
+          name: serviceProviderId
+          type: string
+          
+        - in: body
+          name: Patch Element
+          required: true
+          schema:
+            $ref: '#/definitions/PatchElement'
           description: |
-            - supported qualifiers [==, >=, !=, <=, =@]
-            - ";" will act as filter separator
-            - "," will act as value separator in a particular filter
-          items:
-            type: string
+            "Service Provider patch element"
       consumes:
         - application/json
       produces:
@@ -1676,9 +1678,7 @@ definitions:
       - DOCTOR
       - NURSE
       - MEDICAL_TECHNOLOGIST
-      - PHYSIOTHERAPIST
       - MEDICAL_ATTENDANT
-      - AMBULANCE
 
   DepartmentStatus:
     type: string
