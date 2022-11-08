@@ -1,282 +1,286 @@
-swagger: '2.0'
-host: soshealth.in
-basePath: /price-management/v1
-schemes:
-  - https
-  - http
-consumes:
-  - application/json
-produces:
-  - application/json
+openapi: 3.0.1
+info:
+  title: Price Management Microservice
+  version: "1.0.0"
+servers:
+- url: https://soshealth.in/price-management/v1
+- url: http://soshealth.in/price-management/v1
 paths:
   /pricing:
-    post:
-      operationId: createPricing
-      tags:
-        - Price Management
-      description: Create Pricing for Service Provider
-      consumes:
-        - application/json
-      produces:
-        - application/json
-      parameters:
-        - in: body
-          name: Price Input
-          required: true
-          schema:
-            $ref: '#/definitions/PriceInput'
-      responses:
-        '200':
-          description: |
-            *OK* - Inserted Pricing Details Will be returned Successfully
-          schema:
-            $ref: '#/definitions/Price'
-        '400':
-          description: |
-            *Error* - Bad Request
-          schema:
-            $ref: '#/definitions/Error'
-        '404':
-          description: |
-            *Error* - Not Found
-          schema:
-            $ref: '#/definitions/Error'
-        '500':
-          description: |
-            *Error* - Internal Server error
-          schema:
-            $ref: '#/definitions/Error'
-            
     get:
-      operationId: getProviderPricing
       tags:
-        - Price Management
+      - Price Management
       description: Get Pricing for Service Provider
-      consumes:
-        - application/json
-      produces:
-        - application/json
+      operationId: getProviderPricing
       parameters:
-        - in: query
-          name: serviceId
-          required: true
+      - name: serviceId
+        in: query
+        description: |
+          * Accepts multiple values "," separated
+          * The value "All" is for getting All price details. (Not Case Sensitive)
+        required: true
+        schema:
           type: string
-          description: |
-            * Accepts multiple values "," separated
-            * The value "All" is for getting All price details. (Not Case Sensitive)
-            
       responses:
-        '200':
+        200:
           description: |
             *OK* - Inserted Pricing Details Will be returned Successfully
-          schema:
-            type: array
-            items:
-              $ref: '#/definitions/Price'
-        '400':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Price'
+        400:
           description: |
             *Error* - Bad Request
-          schema:
-            $ref: '#/definitions/Error'
-        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        404:
           description: |
             *Error* - Not Found
-          schema:
-            $ref: '#/definitions/Error'
-        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        500:
           description: |
             *Error* - Internal Server error
-          schema:
-            $ref: '#/definitions/Error'
-            
-  /transaction:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
     post:
-      operationId: createTransaction
       tags:
-        - Transaction Management
-      description: Create Transaction for Service Provider
-      consumes:
-        - application/json
-      produces:
-        - application/json
-      parameters:
-        - in: body
-          name: Transaction Input
-          required: true
-          schema:
-            $ref: '#/definitions/TransactionHistory'
+      - Price Management
+      description: Create Pricing for Service Provider
+      operationId: createPricing
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PriceInput'
+        required: true
       responses:
-        '200':
+        200:
+          description: |
+            *OK* - Inserted Pricing Details Will be returned Successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Price'
+        400:
+          description: |
+            *Error* - Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        404:
+          description: |
+            *Error* - Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        500:
+          description: |
+            *Error* - Internal Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      x-codegen-request-body-name: Price Input
+  /transaction:
+    get:
+      tags:
+      - Transaction Management
+      description: Get Transactions
+      operationId: getTransaction
+      parameters:
+      - name: transactionId
+        in: query
+        description: |
+          * Accepts multiple values "," separated
+          * The value "All" is for getting All Transaction details. (Not Case Sensitive)
+        schema:
+          type: string
+      - name: transactionStatus
+        in: query
+        description: |
+          * Accepts multiple values "," separated
+        schema:
+          type: string
+      - name: transactionMode
+        in: query
+        description: |
+          * Accepts multiple values "," separated
+        schema:
+          type: string
+      responses:
+        200:
+          description: |
+            *OK* - Inserted Pricing Details Will be returned Successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TransactionHistory'
+        400:
+          description: |
+            *Error* - Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        404:
+          description: |
+            *Error* - Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        500:
+          description: |
+            *Error* - Internal Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    post:
+      tags:
+      - Transaction Management
+      description: Create Transaction for Service Provider
+      operationId: createTransaction
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TransactionHistory'
+        required: true
+      responses:
+        200:
           description: |
             *OK* - Inserted Transaction Details Will be returned Successfully
-          schema:
-            $ref: '#/definitions/TransactionHistory'
-        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransactionHistory'
+        400:
           description: |
             *Error* - Bad Request
-          schema:
-            $ref: '#/definitions/Error'
-        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        404:
           description: |
             *Error* - Not Found
-          schema:
-            $ref: '#/definitions/Error'
-        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        500:
           description: |
             *Error* - Internal Server error
-          schema:
-            $ref: '#/definitions/Error'
-            
-    get:
-      operationId: getTransaction
-      tags:
-        - Transaction Management
-      description: Get Transactions
-      consumes:
-        - application/json
-      produces:
-        - application/json
-      parameters:
-        - in: query
-          name: transactionId
-          required: false
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      x-codegen-request-body-name: Transaction Input
+components:
+  schemas:
+    PriceInput:
+      type: object
+      properties:
+        serviceProviderId:
           type: string
           description: |
-            * Accepts multiple values "," separated
-            * The value "All" is for getting All Transaction details. (Not Case Sensitive)
-        - in: query
-          name: transactionStatus
-          required: false
+            Price Id would be primary key for Price table and same as Provider's Id
+        customerPrice:
+          $ref: '#/components/schemas/Amount'
+        deductionRate:
+          type: number
+          description: |
+            Rate on which actual and Customer price will be deducted
+        taxRate:
+          type: number
+          description: |
+            Rate on which TDS will be deducted
+    Error:
+      type: object
+      properties:
+        status:
           type: string
           description: |
-            * Accepts multiple values "," separated
-        - in: query
-          name: transactionMode
-          required: false
+            Status of the Error
+        messgae:
           type: string
           description: |
-            * Accepts multiple values "," separated
-            
-      responses:
-        '200':
+            It will contain detailed message for the Error
+    TransactionHistory:
+      type: object
+      properties:
+        id:
+          type: string
           description: |
-            *OK* - Inserted Pricing Details Will be returned Successfully
-          schema:
-            type: array
-            items:
-              $ref: '#/definitions/TransactionHistory'
-        '400':
+            Transaction ID fro each Transaction to be done
+        recipientId:
+          type: string
           description: |
-            *Error* - Bad Request
-          schema:
-            $ref: '#/definitions/Error'
-        '404':
+            Transaction Recipient Id - Typically Service Provider ID
+        senderId:
+          type: string
           description: |
-            *Error* - Not Found
-          schema:
-            $ref: '#/definitions/Error'
-        '500':
+            Typically End user's Id - Customer Id
+        transactionAmount:
+          $ref: '#/components/schemas/Amount'
+        transactionDate:
+          type: string
           description: |
-            *Error* - Internal Server error
-          schema:
-            $ref: '#/definitions/Error'
-      
-definitions:
-  PriceInput:
-    type: object
-    properties:
-      serviceProviderId: 
-        type: string
-        description: |
-          Price Id would be primary key for Price table and same as Provider's Id
-      customerPrice:
-        $ref: '#/definitions/Amount'
-      deductionRate:
-        type: number
-        description: |
-          Rate on which actual and Customer price will be deducted
-      taxRate:
-        type: number
-        description: |
-          Rate on which TDS will be deducted
-    
-  Error:
-    type: object
-    properties:
-      status:
-        type: string
-        description: |
-          Status of the Error
-      messgae:
-        type: string
-        description: |
-          It will contain detailed message for the Error
-          
-  TransactionHistory:
-    type: object
-    properties:
-      id:
-        type: string
-        description: |
-          Transaction ID fro each Transaction to be done
-      recipientId:
-        type: string
-        description: | 
-          Transaction Recipient Id - Typically Service Provider ID
-      senderId:
-        type: string
-        description: |
-          Typically End user's Id - Customer Id
-      transactionAmount:
-        $ref: '#/definitions/Amount'
-      transactionDate:
-        type: string
-        description: |
-          On which Date Transaction Happened
-      transactionStatus:
-        $ref: '#/definitions/TransactionStatus'
-      transactionMode:
-        $ref: '#/definitions/TransactionMode'
-  
-  TransactionMode:
-    type: string
-    enum:
-    - ONLINE
-    - COD
-    
-  TransactionStatus:
-    type: string
-    description: |
-      Transaction Status would be filter parameter
-    enum:
-    - RECEIVED
-    - REFUND
-    
-  Price:
-    allOf:
-      - $ref: '#/definitions/PriceInput'
+            On which Date Transaction Happened
+        transactionStatus:
+          $ref: '#/components/schemas/TransactionStatus'
+        transactionMode:
+          $ref: '#/components/schemas/TransactionMode'
+    TransactionMode:
+      type: string
+      enum:
+      - ONLINE
+      - COD
+    TransactionStatus:
+      type: string
+      description: |
+        Transaction Status would be filter parameter
+      enum:
+      - RECEIVED
+      - REFUND
+    Price:
+      allOf:
+      - $ref: '#/components/schemas/PriceInput'
       - type: object
         properties:
-          id: 
+          id:
             type: string
             description: |
               Price Id would be primary key for Price table and same as Provider's Id
           actualPrice:
-            $ref: '#/definitions/Amount'
+            $ref: '#/components/schemas/Amount'
           taxAmount:
-            $ref: '#/definitions/Amount'
+            $ref: '#/components/schemas/Amount'
           taxDeductedServiceCharge:
-            $ref: '#/definitions/Amount'
-        
-  Amount:
-    type: object
-    properties:
-      unit:
-        type: string
-        description: |
-          Price Amount Unit | INR , Dollar , Euro
-      value:
-        type: string
-        description: | 
-          Value of object
-         
+            $ref: '#/components/schemas/Amount'
+    Amount:
+      type: object
+      properties:
+        unit:
+          type: string
+          description: |
+            Price Amount Unit | INR , Dollar , Euro
+        value:
+          type: string
+          description: |
+            Value of object
