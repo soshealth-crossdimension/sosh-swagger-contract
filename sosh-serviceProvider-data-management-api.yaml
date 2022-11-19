@@ -1679,6 +1679,7 @@ definitions:
       - NURSE
       - MEDICAL_TECHNOLOGIST
       - MEDICAL_ATTENDANT
+      - PHYSIOTHERAPIST
 
   DepartmentStatus:
     type: string
