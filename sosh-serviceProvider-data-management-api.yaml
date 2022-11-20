@@ -1679,6 +1679,8 @@ definitions:
       - NURSE
       - MEDICAL_TECHNOLOGIST
       - MEDICAL_ATTENDANT
+      - PHYSIOTHERAPIST
+      - AMBULANCE
 
   DepartmentStatus:
     type: string
