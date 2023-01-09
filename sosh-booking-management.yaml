@@ -442,10 +442,13 @@ definitions:
     enum:
       - COMPLETED
       - PENDING
-      - CANCELLED
+      - AUTO_CANCELLED
       - REFUND_INIT
       - REFUND_COMPLETE
       - CONFIRMED
+      - ADMIN_CANCELLED
+      - PROVIDER_CANCELLED
+      - CUSTOMER_CANCELLED
   
   UpdateModel:
     type: object
@@ -586,6 +589,8 @@ definitions:
         type: number
       departmentDetails:
         $ref: '#/definitions/DepartmentRef'
+      bookingType:
+        $ref: '#/definitions/BookingType'
         
   PaymentDetailsRef:
     type: object
@@ -628,6 +633,14 @@ definitions:
         $ref: '#/definitions/PaymentDetailsRef'
       departmentDetails:
         $ref: '#/definitions/DepartmentRef'
+      bookingType:
+        $ref: '#/definitions/BookingType'
+      
+  BookingType:
+    type: string
+    enum:
+      - EMERGENCY_DOORSTEP
+      - OPD
   
   DepartmentRef:
     type: object
