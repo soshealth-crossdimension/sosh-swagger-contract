@@ -422,14 +422,17 @@ paths:
       produces:
         - application/json
       parameters:
-        - in: body
-          name: bookingIdFilter
-          required: true
-          type: string
+        - in: query
+          name: filters
+          type: array
+          description: |
+            - supported qualifiers [==, >=, !=, <=, =@]
+            - ";" will act as filter separator
+            - "," will act as value separator in a
         - in: path
           name: bookingStatus
           required: true
-          type: string    
+          type: string
       responses:
         '200':
           description: |
