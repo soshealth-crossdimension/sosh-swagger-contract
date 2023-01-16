@@ -411,7 +411,46 @@ paths:
             *Error* - Internal Server error
           schema:
             $ref: '#/definitions/Error'
-  
+  /cancelBooking:
+    post:
+      operationId: cancelBooking
+      tags:
+        - Booking Management
+      description: Booking Cancellation
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: CancelBooking
+          required: true
+          schema:
+            $ref: '#/definitions/CancelBooking'    
+      responses:
+        '200':
+          description: |
+            *OK* - Cancel booking Operation will cancel the booking details
+          schema:
+            $ref: '#/definitions/BookingDetails'
+        '400':
+          description: |
+            *Error* - Bad Request
+          schema:
+            $ref: '#/definitions/Error'
+        '404':
+          description: |
+            *Error* - Not Found
+          schema:
+            $ref: '#/definitions/Error'
+        '500':
+          description: |
+            *Error* - Internal Server error
+          schema:
+            $ref: '#/definitions/Error'
+
+
+
 definitions:
   Error:
     type: object
@@ -436,19 +475,19 @@ definitions:
       - CONFIRMED
       - FAILED
       - PENDING
+      - REFUND_INIT
+      - REFUND_COMPLETE
           
   BookingStatus:
     type: string
     enum:
       - COMPLETED
       - PENDING
-      - AUTO_CANCELLED
-      - REFUND_INIT
-      - REFUND_COMPLETE
+      - CANCELLED
       - CONFIRMED
       - ADMIN_CANCELLED
-      - PROVIDER_CANCELLED
-      - CUSTOMER_CANCELLED
+      - SP_CANCELLED
+      - CUST_CANCELLED
   
   UpdateModel:
     type: object
@@ -471,7 +510,6 @@ definitions:
     enum:
       - Online
       - COD
-      - NotSelected
       
   BookingVerification:
     type: object
@@ -589,8 +627,6 @@ definitions:
         type: number
       departmentDetails:
         $ref: '#/definitions/DepartmentRef'
-      bookingType:
-        $ref: '#/definitions/BookingType'
         
   PaymentDetailsRef:
     type: object
@@ -633,14 +669,6 @@ definitions:
         $ref: '#/definitions/PaymentDetailsRef'
       departmentDetails:
         $ref: '#/definitions/DepartmentRef'
-      bookingType:
-        $ref: '#/definitions/BookingType'
-      
-  BookingType:
-    type: string
-    enum:
-      - EMERGENCY_DOORSTEP
-      - OPD
   
   DepartmentRef:
     type: object
@@ -669,7 +697,6 @@ definitions:
     enum:
       - MALE
       - FEMALE
-      - CHILD
       
   ServiceStatus:
     type: string
@@ -679,3 +706,16 @@ definitions:
       - ACCEPTED
       - INTRANSIT
       - ENGAGED
+      - CANCELLED
+
+  CancelBooking:
+    type: object
+    properties:
+      bookingIds:
+        type: array
+        items:
+          type: string
+        description: | 
+          List of booking ids.
+      bookingStatus:
+        $ref: '#/definitions/BookingStatus'
