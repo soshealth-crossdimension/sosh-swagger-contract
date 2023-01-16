@@ -411,7 +411,7 @@ paths:
             *Error* - Internal Server error
           schema:
             $ref: '#/definitions/Error'
-  /cancelBooking:
+  /cancelBooking/{bookingStatus}:
     post:
       operationId: cancelBooking
       tags:
@@ -423,16 +423,19 @@ paths:
         - application/json
       parameters:
         - in: body
-          name: CancelBooking
+          name: bookingIdFilter
           required: true
-          schema:
-            $ref: '#/definitions/CancelBooking'    
+          type: string
+        - in: path
+          name: bookingStatus
+          required: true
+          type: string    
       responses:
         '200':
           description: |
             *OK* - Cancel booking Operation will cancel the booking details
           schema:
-            $ref: '#/definitions/BookingDetails'
+            $ref: '#/definitions/SuccessCancelBooking'
         '400':
           description: |
             *Error* - Bad Request
@@ -708,14 +711,14 @@ definitions:
       - ENGAGED
       - CANCELLED
 
-  CancelBooking:
+  SuccessCancelBooking:
     type: object
     properties:
-      bookingIds:
-        type: array
-        items:
-          type: string
-        description: | 
-          List of booking ids.
-      bookingStatus:
-        $ref: '#/definitions/BookingStatus'
+      status:
+        type: string
+        description: |
+          success status
+      message:
+        type: string
+        description: |
+          It will contain detailed message
