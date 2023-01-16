@@ -413,7 +413,7 @@ paths:
             $ref: '#/definitions/Error'
   /cancelBooking/{bookingStatus}:
     post:
-      operationId: cancelBooking
+      operationId: CancelBooking
       tags:
         - Booking Management
       description: Booking Cancellation
