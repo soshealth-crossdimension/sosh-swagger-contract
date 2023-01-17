@@ -438,7 +438,9 @@ paths:
           description: |
             *OK* - Cancel booking Operation will cancel the booking details
           schema:
-            $ref: '#/definitions/SuccessCancelBooking'
+            type: array
+            items:
+              $ref: '#/definitions/BookingDetails'
         '400':
           description: |
             *Error* - Bad Request
@@ -713,15 +715,3 @@ definitions:
       - INTRANSIT
       - ENGAGED
       - CANCELLED
-
-  SuccessCancelBooking:
-    type: object
-    properties:
-      status:
-        type: string
-        description: |
-          success status
-      message:
-        type: string
-        description: |
-          It will contain detailed message
