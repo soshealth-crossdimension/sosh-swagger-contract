@@ -485,6 +485,7 @@ definitions:
       - PENDING
       - REFUND_INIT
       - REFUND_COMPLETE
+      - BOOKING_CANCELLED
           
   BookingStatus:
     type: string
@@ -715,3 +716,4 @@ definitions:
       - INTRANSIT
       - ENGAGED
       - CANCELLED
+      - BOOKING_CANCELLED
