@@ -424,7 +424,7 @@ paths:
       parameters:
         - in: query
           name: filters
-          type: array
+          type: string
           description: |
             - supported qualifiers [==, >=, !=, <=, =@]
             - ";" will act as filter separator
