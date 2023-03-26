@@ -636,6 +636,8 @@ definitions:
         type: number
       departmentDetails:
         $ref: '#/definitions/DepartmentRef'
+      bookingType:
+        $ref: '#/definitions/BookingType'
         
   PaymentDetailsRef:
     type: object
@@ -678,6 +680,14 @@ definitions:
         $ref: '#/definitions/PaymentDetailsRef'
       departmentDetails:
         $ref: '#/definitions/DepartmentRef'
+      bookingType:
+        $ref: '#/definitions/BookingType'
+      
+  BookingType:
+    type: string
+    enum:
+      - EMERGENCY_DOORSTEP
+      - OPD
   
   DepartmentRef:
     type: object
