@@ -1312,6 +1312,7 @@ definitions:
         description: |
           profile picture of service provider
       departmentId:
+        deprecated: true
         type: string
         description: |
           department id
@@ -1358,6 +1359,8 @@ definitions:
         $ref: '#/definitions/RegistraionStatus'
       serviceStatus:
         $ref: '#/definitions/ServiceStatus'
+      opdServiceStatus:
+        $ref: '#/definitions/OPDServiceStatus'
       gender:
         $ref: '#/definitions/GenderRef'
       involvementType:
@@ -1585,6 +1588,13 @@ definitions:
       - DIAG_SA
       - DIAG_CH
       - OTHERS
+      
+  OPDServiceStatus:
+    type: string
+    enum:
+      - ONLINE
+      - OFFLINE
+    
 
   PatchElement:
     type: array
