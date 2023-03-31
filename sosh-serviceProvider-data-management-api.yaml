@@ -1312,7 +1312,6 @@ definitions:
         description: |
           profile picture of service provider
       departmentId:
-        deprecated: true
         type: string
         description: |
           department id
