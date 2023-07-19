@@ -208,10 +208,6 @@ paths:
         200:
           description: |
             *OK* - Delete the booking details
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/BookingDetails'
         400:
           description: |
             *Error* - Bad Request
