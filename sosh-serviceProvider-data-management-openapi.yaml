@@ -1,0 +1,1855 @@
+openapi: 3.0.1
+info:
+  title: Service Provider Data Management API - OpenAPI 3.0
+  termsOfService: http://swagger.io/terms/
+  contact:
+    email: info@crossdimension.in
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: '1.0.0'
+servers:
+- url: https://soshealth.in/sosDataManagement/v1
+- url: http://soshealth.in/sosDataManagement/v1
+paths:
+  /serviceProvider:
+    get:
+      tags:
+      - Service Provider Management
+      summary: List of Service Providers available
+      description: Produces List of Service Providers available
+      operationId: getserviceProviders
+      parameters:
+      - name: departmentId
+        in: query
+        schema:
+          type: string
+      - name: filters
+        in: query
+        description: |
+          - supported qualifiers [==, >=, !=, <=, =@]
+          - ";" will act as filter separator
+          - "," will act as value separator in a particular filter
+        style: form
+        explode: false
+        schema:
+          type: array
+          items:
+            type: string
+      responses:
+        200:
+          description: |
+            *OK* - List of Service Providers Will be returned Successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ServiceProvider'
+        400:
+          description: |
+            *Error* - Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        404:
+          description: |
+            *Error* - Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        500:
+          description: |
+            *Error* - Internal Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    post:
+      tags:
+      - Service Provider Management
+      summary: Insertion of Service Provider
+      description: Creates New entry of a Service Provider
+      operationId: saveServiceProvider
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ServiceProvider'
+        required: true
+      responses:
+        200:
+          description: |
+            *OK* - Inserted Service Provider Will be returned Successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceProvider'
+        400:
+          description: |
+            *Error* - Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        404:
+          description: |
+            *Error* - Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        500:
+          description: |
+            *Error* - Internal Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      x-codegen-request-body-name: Service Provider Input
+    delete:
+      tags:
+      - Service Provider Management
+      summary: Service Provider Deletion by filter
+      description: delete Service Provider
+      operationId: deleteServiceProviders
+      parameters:
+      - name: filters
+        in: query
+        description: |
+          - supported qualifiers [==, >=, !=, <=, =@]
+          - ";" will act as filter separator
+          - "," will act as value separator in a particular filter
+        style: form
+        explode: false
+        schema:
+          type: array
+          items:
+            type: string
+      responses:
+        200:
+          description: |
+            *OK* - Specific Service Provider Will be returned Successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ServiceProvider'
+        404:
+          description: |
+            *Error* - Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        419:
+          description: |
+            *Error* - Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        500:
+          description: |
+            *Error* - Internal Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /serviceProvider/update:
+    post:
+      tags:
+      - Service Provider Management
+      summary: Service Provider Updation by filter
+      description: Produces List of Service Providers
+      operationId: updateServiceProvider
+      parameters:
+      - name: serviceProviderId
+        in: query
+        schema:
+          type: string
+      requestBody:
+        description: |
+          "Service Provider patch element"
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchElement'
+        required: true
+      responses:
+        200:
+          description: |
+            *OK* - Specific Service Provider Will be returned Successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ServiceProvider'
+        404:
+          description: |
+            *Error* - Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        419:
+          description: |
+            *Error* - Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        500:
+          description: |
+            *Error* - Internal Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      x-codegen-request-body-name: Patch Element
+  /serviceProvider/{serviceProviderId}:
+    get:
+      tags:
+      - Service Provider Management
+      summary: Service Provider By Id
+      description: Produces Service Provider for the Id
+      operationId: getServiceProviderById
+      parameters:
+      - name: serviceProviderId
+        in: path
+        description: |
+          Service Provider By Id
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: |
+            *OK* - List of Service Providers Will be returned Successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceProvider'
+        400:
+          description: |
+            *Error* - Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        404:
+          description: |
+            *Error* - Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        500:
+          description: |
+            *Error* - Internal Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    delete:
+      tags:
+      - Service Provider Management
+      summary: Service Provider Deletion by Id
+      description: delete Service Provider by id
+      operationId: deleteServiceProviderById
+      parameters:
+      - name: serviceProviderId
+        in: path
+        description: |
+          delete Service Provider by id
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: |
+            *OK* - Specific Service Provider Will be returned Successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceProvider'
+        404:
+          description: |
+            *Error* - Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        419:
+          description: |
+            *Error* - Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        500:
+          description: |
+            *Error* - Internal Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /serviceProviderByDevice/{deviceId}:
+    get:
+      tags:
+      - Service Provider Management
+      summary: Service Provider By Device Id
+      description: Produces Service Provider for the device Id
+      operationId: getServiceProviderByDeviceId
+      parameters:
+      - name: deviceId
+        in: path
+        description: |
+          Service Provider By device Id
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: |
+            *OK* - Service Provider details Will be returned Successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceProvider'
+        400:
+          description: |
+            *Error* - Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        404:
+          description: |
+            *Error* - Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        500:
+          description: |
+            *Error* - Internal Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /organization:
+    get:
+      tags:
+      - Organization Management
+      summary: List of Organizations available
+      description: Produces List of Organizations available
+      operationId: getOrganization
+      parameters:
+      - name: filters
+        in: query
+        description: |
+          - supported qualifiers [==, >=, !=, <=, =@]
+          - ";" will act as filter separator
+          - "," will act as value separator in a particular filter
+        style: form
+        explode: false
+        schema:
+          type: array
+          items:
+            type: string
+      responses:
+        200:
+          description: |
+            *OK* - List of Organizations Will be returned Successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Organization'
+        400:
+          description: |
+            *Error* - Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        404:
+          description: |
+            *Error* - Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        500:
+          description: |
+            *Error* - Internal Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    post:
+      tags:
+      - Organization Management
+      summary: Insertion of Organization
+      description: Creates New entry of a Organization
+      operationId: saveOrganization
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Organization'
+        required: true
+      responses:
+        200:
+          description: |
+            *OK* - Inserted Organization Will be returned Successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Organization'
+        400:
+          description: |
+            *Error* - Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        404:
+          description: |
+            *Error* - Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        500:
+          description: |
+            *Error* - Internal Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      x-codegen-request-body-name: Organization Input
+    delete:
+      tags:
+      - Organization Management
+      summary: Organization Deletion by filter
+      description: delete Organization
+      operationId: deleteOrganization
+      parameters:
+      - name: filters
+        in: query
+        description: |
+          - supported qualifiers [==, >=, !=, <=, =@]
+          - ";" will act as filter separator
+          - "," will act as value separator in a particular filter
+        style: form
+        explode: false
+        schema:
+          type: array
+          items:
+            type: string
+      responses:
+        200:
+          description: |
+            *OK* - Specific Organization Will be returned Successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Organization'
+        404:
+          description: |
+            *Error* - Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        419:
+          description: |
+            *Error* - Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        500:
+          description: |
+            *Error* - Internal Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    patch:
+      tags:
+      - Organization Management
+      summary: Organization Updation by filter
+      description: Produces List of Organizations
+      operationId: updateOrganization
+      parameters:
+      - name: filters
+        in: query
+        description: |
+          - supported qualifiers [==, >=, !=, <=, =@]
+          - ";" will act as filter separator
+          - "," will act as value separator in a particular filter
+        style: form
+        explode: false
+        schema:
+          type: array
+          items:
+            type: string
+      requestBody:
+        description: |
+          "Organization patch element"
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchElement'
+        required: true
+      responses:
+        200:
+          description: |
+            *OK* - Specific Organization Will be returned Successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Organization'
+        404:
+          description: |
+            *Error* - Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        419:
+          description: |
+            *Error* - Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        500:
+          description: |
+            *Error* - Internal Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      x-codegen-request-body-name: Patch Element
+  /organization/{organizationId}:
+    get:
+      tags:
+      - Organization Management
+      summary: Organization By Id
+      description: Produces Organization for the Id
+      operationId: getOrganizationById
+      parameters:
+      - name: organizationId
+        in: path
+        description: |
+          Organization By Id
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: |
+            *OK* - List of Organizations Will be returned Successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Organization'
+        400:
+          description: |
+            *Error* - Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        404:
+          description: |
+            *Error* - Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        500:
+          description: |
+            *Error* - Internal Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    delete:
+      tags:
+      - Organization Management
+      summary: Organization Deletion by Id
+      description: delete Organization by id
+      operationId: deleteOrganizationById
+      parameters:
+      - name: organizationId
+        in: path
+        description: |
+          delete organization by id
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: |
+            *OK* - Specific Organization Will be returned Successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Organization'
+        404:
+          description: |
+            *Error* - Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        419:
+          description: |
+            *Error* - Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        500:
+          description: |
+            *Error* - Internal Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /department:
+    get:
+      tags:
+      - Department Management
+      summary: List of Departments available
+      description: Produces List of Departments available
+      operationId: getDepartment
+      parameters:
+      - name: filters
+        in: query
+        description: |
+          - supported qualifiers [==, >=, !=, <=, =@]
+          - ";" will act as filter separator
+          - "," will act as value separator in a particular filter
+        style: form
+        explode: false
+        schema:
+          type: array
+          items:
+            type: string
+      responses:
+        200:
+          description: |
+            *OK* - List of Departments Will be returned Successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Department'
+        400:
+          description: |
+            *Error* - Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        404:
+          description: |
+            *Error* - Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        500:
+          description: |
+            *Error* - Internal Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    post:
+      tags:
+      - Department Management
+      summary: Insertion of Department
+      description: Creates New entry of a Department
+      operationId: saveDepartment
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Department'
+        required: true
+      responses:
+        200:
+          description: |
+            *OK* - Inserted Department Will be returned Successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Department'
+        400:
+          description: |
+            *Error* - Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        404:
+          description: |
+            *Error* - Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        500:
+          description: |
+            *Error* - Internal Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      x-codegen-request-body-name: Department Input
+    delete:
+      tags:
+      - Department Management
+      summary: Department Deletion by filter
+      description: delete Department
+      operationId: deleteDepartment
+      parameters:
+      - name: filters
+        in: query
+        description: |
+          - supported qualifiers [==, >=, !=, <=, =@]
+          - ";" will act as filter separator
+          - "," will act as value separator in a particular filter
+        style: form
+        explode: false
+        schema:
+          type: array
+          items:
+            type: string
+      responses:
+        200:
+          description: |
+            *OK* - Specific Department Will be returned Successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Department'
+        404:
+          description: |
+            *Error* - Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        419:
+          description: |
+            *Error* - Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        500:
+          description: |
+            *Error* - Internal Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    patch:
+      tags:
+      - Department Management
+      summary: Department Updation by filter
+      description: Produces List of Departments
+      operationId: updateDepartment
+      parameters:
+      - name: filters
+        in: query
+        description: |
+          - supported qualifiers [==, >=, !=, <=, =@]
+          - ";" will act as filter separator
+          - "," will act as value separator in a particular filter
+        style: form
+        explode: false
+        schema:
+          type: array
+          items:
+            type: string
+      requestBody:
+        description: |
+          "Department patch element"
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchElement'
+        required: true
+      responses:
+        200:
+          description: |
+            *OK* - Specific Department Will be returned Successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Department'
+        404:
+          description: |
+            *Error* - Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        419:
+          description: |
+            *Error* - Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        500:
+          description: |
+            *Error* - Internal Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      x-codegen-request-body-name: Patch Element
+  /department/{departmentId}:
+    get:
+      tags:
+      - Department Management
+      summary: Department By Id
+      description: Produces Department for the Id
+      operationId: getDepartmentById
+      parameters:
+      - name: departmentId
+        in: path
+        description: |
+          Department By Id
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: |
+            *OK* - List of Departments Will be returned Successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Department'
+        400:
+          description: |
+            *Error* - Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        404:
+          description: |
+            *Error* - Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        500:
+          description: |
+            *Error* - Internal Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    delete:
+      tags:
+      - Department Management
+      summary: Department Deletion by Id
+      description: delete Department by id
+      operationId: deleteDepartmentById
+      parameters:
+      - name: departmentId
+        in: path
+        description: |
+          delete department by id
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: |
+            *OK* - Specific Department Will be returned Successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Department'
+        404:
+          description: |
+            *Error* - Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        419:
+          description: |
+            *Error* - Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        500:
+          description: |
+            *Error* - Internal Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /customer:
+    get:
+      tags:
+      - Customer Management
+      summary: List of Customers available
+      description: Produces List of Customers available
+      operationId: getCustomer
+      parameters:
+      - name: filters
+        in: query
+        description: |
+          - supported qualifiers [==, >=, !=, <=, =@]
+          - ";" will act as filter separator
+          - "," will act as value separator in a particular filter
+        style: form
+        explode: false
+        schema:
+          type: array
+          items:
+            type: string
+      responses:
+        200:
+          description: |
+            *OK* - List of Customers Will be returned Successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Customer'
+        400:
+          description: |
+            *Error* - Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        404:
+          description: |
+            *Error* - Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        500:
+          description: |
+            *Error* - Internal Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    post:
+      tags:
+      - Customer Management
+      summary: Insertion of Customer
+      description: Creates New entry of a Customer
+      operationId: saveCustomer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Customer'
+        required: true
+      responses:
+        200:
+          description: |
+            *OK* - Inserted Customer Will be returned Successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Customer'
+        400:
+          description: |
+            *Error* - Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        404:
+          description: |
+            *Error* - Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        500:
+          description: |
+            *Error* - Internal Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      x-codegen-request-body-name: Customer Input
+    delete:
+      tags:
+      - Customer Management
+      summary: Customer Deletion by filter
+      description: delete Customer
+      operationId: deleteCustomer
+      parameters:
+      - name: filters
+        in: query
+        description: |
+          - supported qualifiers [==, >=, !=, <=, =@]
+          - ";" will act as filter separator
+          - "," will act as value separator in a particular filter
+        style: form
+        explode: false
+        schema:
+          type: array
+          items:
+            type: string
+      responses:
+        200:
+          description: |
+            *OK* - Specific Customer Will be returned Successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Customer'
+        404:
+          description: |
+            *Error* - Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        419:
+          description: |
+            *Error* - Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        500:
+          description: |
+            *Error* - Internal Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    patch:
+      tags:
+      - Customer Management
+      summary: Customer Updation by filter
+      description: Produces List of Customers
+      operationId: updateCustomer
+      parameters:
+      - name: filters
+        in: query
+        description: |
+          - supported qualifiers [==, >=, !=, <=, =@]
+          - ";" will act as filter separator
+          - "," will act as value separator in a particular filter
+        style: form
+        explode: false
+        schema:
+          type: array
+          items:
+            type: string
+      requestBody:
+        description: |
+          "Customer patch element"
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchElement'
+        required: true
+      responses:
+        200:
+          description: |
+            *OK* - Specific Customer Will be returned Successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Customer'
+        404:
+          description: |
+            *Error* - Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        419:
+          description: |
+            *Error* - Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        500:
+          description: |
+            *Error* - Internal Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      x-codegen-request-body-name: Patch Element
+  /customer/{customerId}:
+    get:
+      tags:
+      - Customer Management
+      summary: Customer By Id
+      description: Produces Customer for the Id
+      operationId: getCustomerById
+      parameters:
+      - name: customerId
+        in: path
+        description: |
+          Customer By Id
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: |
+            *OK* - List of Customers Will be returned Successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Customer'
+        400:
+          description: |
+            *Error* - Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        404:
+          description: |
+            *Error* - Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        500:
+          description: |
+            *Error* - Internal Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    delete:
+      tags:
+      - Customer Management
+      summary: Customer Deletion by Id
+      description: delete Customer by id
+      operationId: deleteCustomerById
+      parameters:
+      - name: customerId
+        in: path
+        description: |
+          delete customer by id
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: |
+            *OK* - Specific Customer Will be returned Successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Customer'
+        404:
+          description: |
+            *Error* - Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        419:
+          description: |
+            *Error* - Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        500:
+          description: |
+            *Error* - Internal Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /customerByDevice/{deviceId}:
+    get:
+      tags:
+      - Customer Management
+      summary: Customer By Device Id
+      description: Produces Customer for the device Id
+      operationId: getCustomerByDeviceId
+      parameters:
+      - name: deviceId
+        in: path
+        description: |
+          Customer By device Id
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: |
+            *OK* - Customer details Will be returned Successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Customer'
+        400:
+          description: |
+            *Error* - Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        404:
+          description: |
+            *Error* - Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        500:
+          description: |
+            *Error* - Internal Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /serviceProviderData:
+    get:
+      tags:
+      - Misc
+      summary: List of ServiceProviderData
+      description: Produces List of ServiceProviderData available
+      operationId: getServiceProviderData
+      parameters:
+      - name: filters
+        in: query
+        description: |
+          - supported qualifiers [==, >=, !=, <=, =@]
+          - ";" will act as filter separator
+          - "," will act as value separator in a particular filter
+        style: form
+        explode: false
+        schema:
+          type: array
+          items:
+            type: string
+      responses:
+        200:
+          description: |
+            *OK* - List of Service Provider Required Docs Will be returned Successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ServiceProviderData'
+        400:
+          description: |
+            *Error* - Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        404:
+          description: |
+            *Error* - Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        500:
+          description: |
+            *Error* - Internal Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /serviceProvidersWithDistance:
+    get:
+      tags:
+      - Misc
+      summary: List of Service Providers sort by distance
+      description: Produces List of Service Providers available in a distance
+      operationId: getServiceProvidersByDistance
+      parameters:
+      - name: customerLocation
+        in: query
+        description: |
+          - location of the customer
+        schema:
+          type: string
+      - name: filters
+        in: query
+        description: |
+          - supported qualifiers [==, >=, !=, <=, =@]
+          - ";" will act as filter separator
+          - "," will act as value separator in a particular filter
+        style: form
+        explode: false
+        schema:
+          type: array
+          items:
+            type: string
+      responses:
+        200:
+          description: |
+            *OK* - List of ServiceProviders Will be returned Successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ServiceProviderResponse'
+        400:
+          description: |
+            *Error* - Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        404:
+          description: |
+            *Error* - Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        500:
+          description: |
+            *Error* - Internal Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /misc/departmentByServiceType:
+    get:
+      tags:
+      - Misc
+      summary: List of Departments per Service Type
+      description: Produces List of Departments enabled for each service types
+      operationId: getDepartmentListByServiceType
+      parameters:
+      - name: serviceType
+        in: query
+        description: "* Must match the enum value of ServiceType \n"
+        schema:
+          type: string
+      responses:
+        200:
+          description: |
+            *OK* - List of departments Will be returned Successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DepartmentRef'
+        400:
+          description: |
+            *Error* - Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        404:
+          description: |
+            *Error* - Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        500:
+          description: |
+            *Error* - Internal Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    post:
+      tags:
+      - Misc
+      summary: Insertion of Department
+      description: Creates New entry of a Department
+      operationId: saveDepartmentWithServiceType
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DepartmentRef'
+        required: true
+      responses:
+        200:
+          description: |
+            *OK* - Inserted Department Will be returned Successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Department'
+        400:
+          description: |
+            *Error* - Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        404:
+          description: |
+            *Error* - Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        500:
+          description: |
+            *Error* - Internal Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      x-codegen-request-body-name: Department Ref Input
+components:
+  schemas:
+    ServiceProvider:
+      required:
+      - deviceId
+      - id
+      - serviceType
+      type: object
+      properties:
+        id:
+          type: string
+          description: "Id of Particular Service Provider \n"
+        aadhaarId:
+          type: string
+          description: "Aadhaar Id of Particular Service Provider \n"
+        deviceId:
+          type: string
+          description: |
+            Device Id of Particular Service Provider's mobile
+        salutation:
+          $ref: '#/components/schemas/SalutationRef'
+        firstName:
+          type: string
+          description: |
+            first name of a Service Provider
+        middleName:
+          type: string
+          description: |
+            Middle name of a Service Provider
+        lastName:
+          type: string
+          description: |
+            last name of a Service Provider
+        profilePic:
+          type: string
+          description: |
+            profile picture of service provider
+          format: binary
+        departmentId:
+          type: string
+          description: |
+            department id
+        departmentIdList:
+          type: array
+          description: |
+            Department ID List
+          items:
+            type: string
+        hospitalId:
+          type: string
+          description: |
+            hospital id -> this would be the id of SOSHealth org id
+        qualification:
+          type: string
+          description: |
+            highest qualification of a service provider
+        docsSubmitted:
+          type: array
+          items:
+            type: string
+            description: |
+              pdf version of all the submitted doc
+            format: binary
+        registrationDate:
+          type: string
+          description: |
+            date of registration in SOSHealth
+        joiningDate:
+          type: string
+          description: |
+            date of registration confirmation in SOSHealth
+        serviceType:
+          $ref: '#/components/schemas/ServiceType'
+        serviceExperience:
+          type: string
+          description: |
+            job experience of the Service Provider in years
+        grade:
+          type: integer
+          description: |
+            grade will be between 1 to 5 where 1 means best
+        registrationStatus:
+          $ref: '#/components/schemas/RegistraionStatus'
+        serviceStatus:
+          $ref: '#/components/schemas/ServiceStatus'
+        gender:
+          $ref: '#/components/schemas/GenderRef'
+        involvementType:
+          $ref: '#/components/schemas/DepartmentType'
+        contact:
+          $ref: '#/components/schemas/ContactMedium'
+        permanentAddress:
+          type: string
+          description: |
+            permanent address of service provider
+        presentAddress:
+          type: string
+          description: |
+            present address of service provider
+        hasIndividualFee:
+          type: boolean
+          description: |
+            It will determine that whether price would be departmental or individual
+    Department:
+      required:
+      - id
+      - name
+      - organizationId
+      type: object
+      properties:
+        id:
+          type: string
+          description: |
+            id of the department
+        name:
+          type: string
+          description: |
+            name of the department
+        organizationId:
+          type: string
+          description: |
+            Organization id
+        status:
+          $ref: '#/components/schemas/DepartmentStatus'
+        pocDetails:
+          $ref: '#/components/schemas/ContactMedium'
+        startingDate:
+          type: string
+          description: |
+            date of start functioning day of a department to get clear analysis of that department
+        freezingDate:
+          type: string
+          description: |
+            date of Freezing functioning day of a department to get clear analysis of that department
+    Customer:
+      required:
+      - deviceId
+      - id
+      type: object
+      properties:
+        id:
+          type: string
+          description: "Id of Particular Customer \n"
+        aadhaarId:
+          type: string
+          description: "Aadhaar Id of Particular Customer \n"
+        deviceId:
+          type: string
+          description: |
+            Device Id of Particular Service Provider's mobile
+        firstName:
+          type: string
+          description: |
+            first name of a Customer
+        middleName:
+          type: string
+          description: |
+            Middle name of a Customer
+        lastName:
+          type: string
+          description: |
+            last name of a Customer
+        profilePic:
+          type: string
+          description: |
+            profile picture of service provider
+          format: binary
+        createdDate:
+          type: string
+          description: |
+            date of account creation in SOSHealth
+        gender:
+          $ref: '#/components/schemas/GenderRef'
+        contact:
+          $ref: '#/components/schemas/ContactMedium'
+        permanentAddress:
+          type: string
+          description: |
+            permanent address of service provider
+        presentAddress:
+          type: string
+          description: |
+            present address of service provider
+    Organization:
+      required:
+      - id
+      - name
+      - organizationType
+      type: object
+      properties:
+        id:
+          type: string
+          description: |
+            id of the hospital
+        name:
+          type: string
+          description: |
+            name of the hospital
+        contactMedium:
+          $ref: '#/components/schemas/ContactMedium'
+        address:
+          $ref: '#/components/schemas/AddressRef'
+        state:
+          type: string
+          description: |
+            State where its Situated
+        country:
+          type: string
+          description: |
+            Country where its situated
+        organizationType:
+          $ref: '#/components/schemas/OrganizationType'
+    ServiceProviderData:
+      required:
+      - documentList
+      - serviceProviderType
+      type: object
+      properties:
+        serviceProviderType:
+          $ref: '#/components/schemas/ServiceType'
+        documentList:
+          type: array
+          items:
+            type: string
+            description: |
+              list of documents need to be submitted
+    ContactMedium:
+      type: object
+      properties:
+        email:
+          type: string
+          description: |
+            Email id of Particular Customer
+        mobile:
+          type: string
+          description: |
+            mobile of Particular Customer
+        fax:
+          type: string
+          description: |
+            fax of Particular Customer
+        alternate_number:
+          type: string
+          description: |
+            mobile of Particular Customer
+    AddressRef:
+      type: object
+      properties:
+        street1:
+          type: string
+          description: |
+            Street 1 of Organization
+        street2:
+          type: string
+          description: |
+            Street 2 of Organization
+        country:
+          type: string
+          description: |
+            Country of the organizaton
+        state:
+          type: string
+          description: |
+            State where its Situated
+        zipcode:
+          type: string
+          description: |
+            Zipcode for the organization
+    DistanceRef:
+      type: object
+      properties:
+        text:
+          type: string
+          description: |
+            distance in kms
+        value:
+          type: integer
+          description: |
+            distance in meters
+    ServiceProviderResponse:
+      type: object
+      properties:
+        serviceProvider:
+          $ref: '#/components/schemas/ServiceProvider'
+        distance:
+          $ref: '#/components/schemas/DistanceRef'
+    OrganizationType:
+      type: string
+      enum:
+      - HOSPITAL_SA
+      - HOSPITAL_CH
+      - PATH_SA
+      - PATH_CH
+      - DISP_SA
+      - DISP_CH
+      - DIAG_SA
+      - DIAG_CH
+      - OTHERS
+    PatchElement:
+      type: array
+      items:
+        type: object
+        properties:
+          op:
+            type: string
+            description: |
+              Operation To be performed
+            example: add, remove, replace
+          value:
+            type: string
+          path:
+            type: string
+            description: |
+              Object Path to be Patched
+    EnabledDepartment:
+      type: object
+      properties:
+        serviceType:
+          $ref: '#/components/schemas/ServiceType'
+        departmentList:
+          type: array
+          items:
+            $ref: '#/components/schemas/Department'
+    Error:
+      type: object
+      properties:
+        status:
+          type: string
+          description: |
+            Status of the error code
+        message:
+          type: string
+          description: |
+            Error message
+        details:
+          type: string
+          description: |
+            Error Details
+        path:
+          type: string
+          description: |
+            Error Path
+    DepartmentType:
+      type: string
+      enum:
+      - OPD
+      - IPD
+      - BOTH
+    GenderRef:
+      type: string
+      enum:
+      - MALE
+      - FEMALE
+      - TRANSGENDER
+      - UNDISCLOSED
+    SalutationRef:
+      type: string
+      enum:
+      - DR
+      - MR
+      - MRS
+      - MS
+    RegistraionStatus:
+      type: string
+      enum:
+      - PENDING
+      - APPROVED
+      - REJECTED
+      - REAPPLY
+    ServiceStatus:
+      type: string
+      enum:
+      - ONLINE
+      - OFFLINE
+      - ENGAGED
+      - RESERVED
+    ServiceType:
+      type: string
+      enum:
+      - DOCTOR
+      - NURSE
+      - MEDICAL_TECHNOLOGIST
+      - MEDICAL_ATTENDANT
+      - PHYSIOTHERAPIST
+      - AMBULANCE
+    DepartmentStatus:
+      type: string
+      enum:
+      - ACTIVE
+      - INACTIVE
+    DepartmentRef:
+      type: object
+      properties:
+        id:
+          type: string
+        department:
+          type: array
+          items:
+            $ref: '#/components/schemas/ModulerDepartmentData'
+        serviceType:
+          $ref: '#/components/schemas/ServiceType'
+    ModulerDepartmentData:
+      type: object
+      properties:
+        departmentName:
+          type: string
+        departmentId:
+          type: string
