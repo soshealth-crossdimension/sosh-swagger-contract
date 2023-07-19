@@ -1,0 +1,754 @@
+openapi: 3.0.1
+servers:
+- url: https://soshealth.in/sosBookingManagement/v1
+- url: http://soshealth.in/sosBookingManagement/v1
+paths:
+  /booking:
+    get:
+      tags:
+      - Booking Management
+      description: Get Booking from DB Depending on query clauses
+      operationId: getBookings
+      parameters:
+      - name: filters
+        in: query
+        description: |
+          - supported qualifiers [==, >=, !=, <=, =@]
+          - ";" will act as filter separator
+          - "," will act as value separator in a particular filter
+        style: form
+        explode: false
+        schema:
+          type: array
+          items:
+            type: string
+      responses:
+        200:
+          description: |
+            *OK* - Inserted Booking Details Will be returned Successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/BookingDetails'
+        400:
+          description: |
+            *Error* - Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        404:
+          description: |
+            *Error* - Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        500:
+          description: |
+            *Error* - Internal Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    post:
+      tags:
+      - Booking Management
+      description: Create Booking from Customer side as Inprogress
+      operationId: createBooking
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BookingInput'
+        required: true
+      responses:
+        200:
+          description: |
+            *OK* - Inserted Booking Details Will be returned Successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BookingDetails'
+        400:
+          description: |
+            *Error* - Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        404:
+          description: |
+            *Error* - Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        500:
+          description: |
+            *Error* - Internal Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      x-codegen-request-body-name: Booking Input
+  /booking/{bookingId}:
+    get:
+      tags:
+      - Booking Management
+      description: Get Booking Details by Booking ID
+      operationId: getBookingById
+      parameters:
+      - name: bookingId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: |
+            *OK* - Updated Put Operation will update the booking details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BookingDetails'
+        400:
+          description: |
+            *Error* - Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        404:
+          description: |
+            *Error* - Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        500:
+          description: |
+            *Error* - Internal Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    put:
+      tags:
+      - Booking Management
+      description: Create Booking from Customer side as Inprogress, This will be idempotent
+        call thats why choose PUT in place of PATCH.
+      operationId: updateBooking
+      parameters:
+      - name: bookingId
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateModel'
+        required: true
+      responses:
+        200:
+          description: |
+            *OK* - Updated Put Operation will update the booking details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BookingDetails'
+        400:
+          description: |
+            *Error* - Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        404:
+          description: |
+            *Error* - Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        500:
+          description: |
+            *Error* - Internal Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      deprecated: true
+      x-codegen-request-body-name: UpdateInput
+    delete:
+      tags:
+      - Booking Management
+      description: Delete Booking by Booking ID
+      operationId: deleteBooking
+      parameters:
+      - name: bookingId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: |
+            *OK* - Delete the booking details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BookingDetails'
+        400:
+          description: |
+            *Error* - Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        404:
+          description: |
+            *Error* - Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        500:
+          description: |
+            *Error* - Internal Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /pastBooking/{customerId}:
+    get:
+      tags:
+      - Booking History
+      description: Get past booking of a specific customer
+      operationId: getPastBookings
+      parameters:
+      - name: customerId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: |
+            *OK* - Fetch the past booking details of a customer
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/BookingDetails'
+        400:
+          description: |
+            *Error* - Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        404:
+          description: |
+            *Error* - Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        500:
+          description: |
+            *Error* - Internal Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /currentBooking/{customerId}:
+    get:
+      tags:
+      - Booking History
+      description: Get past booking of a specific customer
+      operationId: getCurrentBooking
+      parameters:
+      - name: customerId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: |
+            *OK* - Fetch the past booking details of a customer
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/BookingDetails'
+        400:
+          description: |
+            *Error* - Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        404:
+          description: |
+            *Error* - Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        500:
+          description: |
+            *Error* - Internal Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /currentBooking/provider/{serviceProviderId}:
+    get:
+      tags:
+      - Booking History
+      description: Get past booking of a specific Service Provider
+      operationId: getCurrentBookingByServiceProvider
+      parameters:
+      - name: serviceProviderId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: |
+            *OK* - Fetch the past booking details of a customer
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/BookingDetails'
+        400:
+          description: |
+            *Error* - Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        404:
+          description: |
+            *Error* - Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        500:
+          description: |
+            *Error* - Internal Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /updatePayment/{bookingId}:
+    post:
+      tags:
+      - Payment Management
+      description: Update payment for a specific booking when payment is done after
+        create booking with COD
+      operationId: updatePayment
+      parameters:
+      - name: bookingId
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PaymentDetailsRef'
+        required: true
+      responses:
+        200:
+          description: |
+            *OK* - Updated Put Operation will update the booking details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BookingDetails'
+        400:
+          description: |
+            *Error* - Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        404:
+          description: |
+            *Error* - Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        500:
+          description: |
+            *Error* - Internal Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      x-codegen-request-body-name: UpdatePaymentDetails
+  /verifyBooking/{bookingId}:
+    post:
+      tags:
+      - Booking Management
+      description: Booking Management verification on otp submit
+      operationId: verifyBooking
+      parameters:
+      - name: bookingId
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BookingVerification'
+        required: true
+      responses:
+        200:
+          description: |
+            *OK* - Updated Put Operation will update the booking details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BookingDetails'
+        400:
+          description: |
+            *Error* - Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        404:
+          description: |
+            *Error* - Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        500:
+          description: |
+            *Error* - Internal Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      x-codegen-request-body-name: VerifyBooking
+  /cancelBooking/{bookingStatus}:
+    post:
+      tags:
+      - Booking Management
+      description: Booking Cancellation
+      operationId: CancelBooking
+      parameters:
+      - name: filters
+        in: query
+        description: |
+          - supported qualifiers [==, >=, !=, <=, =@]
+          - ";" will act as filter separator
+          - "," will act as value separator in a
+        schema:
+          type: string
+      - name: bookingStatus
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: |
+            *OK* - Cancel booking Operation will cancel the booking details
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/BookingDetails'
+        400:
+          description: |
+            *Error* - Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        404:
+          description: |
+            *Error* - Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        500:
+          description: |
+            *Error* - Internal Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  schemas:
+    Error:
+      type: object
+      properties:
+        status:
+          type: string
+          description: |
+            Status of the Error
+        messgae:
+          type: string
+          description: |
+            It will contain detailed message for the Error
+        reason:
+          type: string
+        statusCode:
+          type: string
+    PaymentStatus:
+      type: string
+      enum:
+      - CANCELLED
+      - CONFIRMED
+      - FAILED
+      - PENDING
+      - REFUND_INIT
+      - REFUND_COMPLETE
+      - BOOKING_CANCELLED
+    BookingStatus:
+      type: string
+      enum:
+      - COMPLETED
+      - PENDING
+      - CANCELLED
+      - CONFIRMED
+      - ADMIN_CANCELLED
+      - SP_CANCELLED
+      - CUST_CANCELLED
+    UpdateModel:
+      type: object
+      properties:
+        paymentId:
+          type: string
+          description: |
+            After Payment Payment ID to be updated.
+        paymentStatus:
+          $ref: '#/components/schemas/PaymentStatus'
+        paymentMode:
+          $ref: '#/components/schemas/PaymentMode'
+        serviceProviderId:
+          type: string
+          description: |
+            If Service Provider changes then details of provider needs to be updated.
+    PaymentMode:
+      type: string
+      enum:
+      - Online
+      - COD
+    BookingVerification:
+      type: object
+      properties:
+        serviceProviderId:
+          type: string
+        customerId:
+          type: string
+        bookingOTP:
+          type: integer
+    AddressRef:
+      type: object
+      properties:
+        street1:
+          type: string
+          description: |
+            Street 1 of Organization
+        street2:
+          type: string
+          description: |
+            Street 2 of Organization
+        country:
+          type: string
+          description: |
+            Country of the organizaton
+        state:
+          type: string
+          description: |
+            State where its Situated
+        zipcode:
+          type: string
+          description: |
+            Zipcode for the organization
+    CustomerRef:
+      type: object
+      properties:
+        id:
+          type: string
+          description: |
+            Customer ID will be populated
+        fullName:
+          type: string
+          description: |
+            Full Name of the Customer
+        profilePic:
+          type: string
+          description: |
+            profile picture of service provider
+          format: binary
+        mobile:
+          type: string
+    ServiceProviderRef:
+      type: object
+      properties:
+        id:
+          type: string
+          description: |
+            Service Provider ID
+        qualification:
+          type: string
+          description: |
+            Qualification of a Service Provider
+        fullName:
+          type: string
+          description: |
+            Full Name of a Service Provider must be visible
+        profilePic:
+          type: string
+          description: |
+            profile picture of service provider
+          format: binary
+        mobile:
+          type: string
+        serviceStatus:
+          type: string
+    BookingDetails:
+      type: object
+      properties:
+        id:
+          type: string
+          description: |
+            Booking ID must unique
+        deviceId:
+          type: string
+          description: |
+            From which Device this booking is been made
+        bookingDate:
+          type: string
+          description: |
+            Booking Date Must be populated
+        bookingOTP:
+          type: integer
+          description: |
+            This OTP must be Booking OTP which needs to be validated before Servicing
+        serviceProvider:
+          $ref: '#/components/schemas/ServiceProviderRef'
+        customer:
+          $ref: '#/components/schemas/CustomerRef'
+        patientDetails:
+          $ref: '#/components/schemas/PatientDetailsRef'
+        serviceAddress:
+          type: string
+        bookingStatus:
+          $ref: '#/components/schemas/BookingStatus'
+        serviceStatus:
+          $ref: '#/components/schemas/ServiceStatus'
+        paymentDetails:
+          $ref: '#/components/schemas/PaymentDetailsRef'
+        feeDetails:
+          type: number
+        departmentDetails:
+          $ref: '#/components/schemas/DepartmentRef'
+        bookingType:
+          $ref: '#/components/schemas/BookingType'
+    PaymentDetailsRef:
+      type: object
+      properties:
+        paymentId:
+          type: string
+          description: |
+            Payment / Transaction ID
+        paymentMode:
+          $ref: '#/components/schemas/PaymentMode'
+        amount:
+          type: number
+          description: "Fees of Service provider  \n"
+        paymentStatus:
+          $ref: '#/components/schemas/PaymentStatus'
+        paymentDate:
+          type: string
+          description: |
+            Payment Date Must be populated
+    BookingInput:
+      type: object
+      properties:
+        serviceProviderId:
+          type: string
+          description: |
+            Service Provider Id
+        customerId:
+          type: string
+          description: |
+            Customer ID for booking
+        serviceAddress:
+          type: string
+        serviceStatus:
+          $ref: '#/components/schemas/ServiceStatus'
+        patientDetails:
+          $ref: '#/components/schemas/PatientDetailsRef'
+        paymentDetails:
+          $ref: '#/components/schemas/PaymentDetailsRef'
+        departmentDetails:
+          $ref: '#/components/schemas/DepartmentRef'
+        bookingType:
+          $ref: '#/components/schemas/BookingType'
+    BookingType:
+      type: string
+      enum:
+      - EMERGENCY_DOORSTEP
+      - OPD
+    DepartmentRef:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+    PatientDetailsRef:
+      type: object
+      properties:
+        firstName:
+          type: string
+        middleName:
+          type: string
+        lastName:
+          type: string
+        age:
+          type: string
+        sex:
+          $ref: '#/components/schemas/GenderRef'
+    GenderRef:
+      type: string
+      enum:
+      - MALE
+      - FEMALE
+    ServiceStatus:
+      type: string
+      enum:
+      - COMPLETED
+      - DECLINED
+      - ACCEPTED
+      - INTRANSIT
+      - ENGAGED
+      - CANCELLED
+      - BOOKING_CANCELLED
